@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form"
+import { Input, Button } from "@mantine/core"
 import { postCategory } from "../services/Category"
 
 export  function CategoryForm() {
@@ -21,10 +22,10 @@ export  function CategoryForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       Name:
-      <input {...register("name")} />
+      <Input {...register("name")} />
       <br />
       <br />
-      <input type="submit" />
+      <Button type="submit">Crear Categoria</Button>
     </form>
   )
 }

@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form"
-import { postMotor, postMotors } from "../services/Motors"
+import { postMotor } from "../services/Motors"
+import { Input, Button ,Center, Title } from "@mantine/core"
 
 export  function MotorForm() {
   const { register, handleSubmit } = useForm()
@@ -21,10 +22,10 @@ export  function MotorForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       Name:
-      <input {...register("name")} />
+      <Input {...register("name")} />
       <br />
       <br />
-      <input type="submit" />
+      <Center><Button type="submit">Crear Motor</Button></Center>
     </form>
   )
 }

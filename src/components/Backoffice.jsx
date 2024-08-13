@@ -21,6 +21,7 @@ export const Backoffice = () => {
       label= "Vehiculos"
       leftSection={<IconGauge size="1rem" stroke={1.5} />}
     >
+      <NavLink href="/listVehicles" label= "Lista de Vehiculos" />
       <NavLink href="/vehiculos" label= "Crear Vehiculos" />
       <NavLink label = "Modificar Vehiculo Totalmente" href="/putVehicles" />
       <NavLink label = "Modificar Vehiculo Parcialmente" href="/patchVehicle" />

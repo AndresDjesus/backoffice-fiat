@@ -15,6 +15,8 @@ import {PatchVehicle} from './components/PatchVehicle';
 import {DeleteVehicle} from './components/DeleteVehicle';
 import {BackofficeCategories} from './components/BackofficeCategories';
 import {BackofficeMotor} from './components/BackofficeMotor';
+import { ListVehicle } from './components/ListaVehicles';
+import {BackofficeCombustible} from './components/BackofficeCombustible';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -41,6 +43,10 @@ const router = createBrowserRouter([
     element: <DeleteVehicle />,
   },
   {
+    path: "/listVehicles",
+    element: <ListVehicle />,
+  },
+  {
     path: "/categories",
     element: <BackofficeCategories />,
   },
@@ -48,6 +54,10 @@ const router = createBrowserRouter([
     path: "/motors",
     element: <BackofficeMotor />,
   },
+  {
+    path: "/combustible",
+    element: <BackofficeCombustible />,
+  }
 
 
 ]);

@@ -7,6 +7,20 @@ const getCombustible = async () => {
     return result
 }
 
+//Crear un Combustible
+const postCombustible = async (data) => {
+
+    const response = await fetch('http://localhost:3001/api/combustible', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    const result = await response.json()
+    return result
+}
+
 //Modificar un Combustible
 const putCombustible = async (data) => {
 
@@ -53,5 +67,6 @@ module.exports = {
     getCombustible,
     putCombustible,
     patchCombustible,
-    deleteCombustible
+    deleteCombustible,
+    postCombustible
  }

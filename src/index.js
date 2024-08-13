@@ -14,6 +14,7 @@ import {PutVehicle} from './components/PutVehicle';
 import {PatchVehicle} from './components/PatchVehicle';
 import {DeleteVehicle} from './components/DeleteVehicle';
 import {BackofficeCategories} from './components/BackofficeCategories';
+import {BackofficeMotor} from './components/BackofficeMotor';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -42,7 +43,12 @@ const router = createBrowserRouter([
   {
     path: "/categories",
     element: <BackofficeCategories />,
-  }
+  },
+  {
+    path: "/motors",
+    element: <BackofficeMotor />,
+  },
+
 
 ]);
 

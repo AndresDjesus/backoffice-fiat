@@ -69,9 +69,9 @@ export const Backoffice = () => {
     defaultOpened
     >
         <NavLink label = "Crear Categoria" href="/categories" />
-        <NavLink label = "Modificar Categoria Totalmente" href="#" />
-        <NavLink label = "Modificar Categoria Parcialmente" href="#" />
-        <NavLink label = "Eliminar Categoria" href="#" />
+        <NavLink label = "Modificar Categoria Totalmente" href="/putCategories"/>
+        <NavLink label = "Modificar Categoria Parcialmente" href="/patchCategory" />
+        <NavLink label = "Eliminar Categoria" href="/deleteCategory" />
     </NavLink>    
 
     <NavLink 
@@ -81,10 +81,10 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
-        <NavLink label = "Crear Motor" href="#" />
-        <NavLink label = "Modificar Motor Totalmente" href="#" />
-        <NavLink label = "Modificar Motor Parcialmente" href="#" />
-        <NavLink label = "Eliminar Motor" href="#" />
+        <NavLink label = "Crear Motor" href="/motors" />
+        <NavLink label = "Modificar Motor Totalmente" href="/putMotors" />
+        <NavLink label = "Modificar Motor Parcialmente" href="/patchMotor" />
+        <NavLink label = "Eliminar Motor" href="/deleteMotor" />
     </NavLink>    
     <NavLink 
     href="#"
@@ -93,10 +93,10 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
-        <NavLink label = "Crear Motor" href="#" />
-        <NavLink label = "Modificar Motor Totalmente" href="#" />
-        <NavLink label = "Modificar Motor Parcialmente" href="#" />
-        <NavLink label = "Eliminar Motor" href="#" />
+        <NavLink label = "Crear Interior" href="/interior" />
+        <NavLink label = "Modificar Interior Totalmente" href="/putInterior" />
+        <NavLink label = "Modificar Interior Parcialmente" href="/patchInterior" />
+        <NavLink label = "Eliminar Interior" href="/deleteInterior" />
     </NavLink>    
     <NavLink 
     href="#"
@@ -105,10 +105,10 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
-        <NavLink label = "Crear Motor" href="#" />
-        <NavLink label = "Modificar Motor Totalmente" href="#" />
-        <NavLink label = "Modificar Motor Parcialmente" href="#" />
-        <NavLink label = "Eliminar Motor" href="#" />
+        <NavLink label = "Crear Design" href="/design" />
+        <NavLink label = "Modificar Design Totalmente" href="/putDesign" />
+        <NavLink label = "Modificar Design Parcialmente" href="/patchDesign" />
+        <NavLink label = "Eliminar Design" href="/deleteDesign" />
     </NavLink>   
     <NavLink 
     href="#"
@@ -117,10 +117,10 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
-        <NavLink label = "Crear Motor" href="#" />
-        <NavLink label = "Modificar Motor Totalmente" href="#" />
-        <NavLink label = "Modificar Motor Parcialmente" href="#" />
-        <NavLink label = "Eliminar Motor" href="#" />
+        <NavLink label = "Crear Technology" href="/technology" />
+        <NavLink label = "Modificar technology Totalmente" href="/putTechnology" />
+        <NavLink label = "Modificar technology Parcialmente" href="/patchTechnology" />
+        <NavLink label = "Eliminar Technology" href="/deleteTechnology" />
     </NavLink>     
     <NavLink 
     href="#"
@@ -129,10 +129,10 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
-        <NavLink label = "Crear Motor" href="#" />
-        <NavLink label = "Modificar Motor Totalmente" href="#" />
-        <NavLink label = "Modificar Motor Parcialmente" href="#" />
-        <NavLink label = "Eliminar Motor" href="#" />
+        <NavLink label = "Crear Combustible" href="/combustible" />
+        <NavLink label = "Modificar combustible Totalmente" href="/putCombustible" />
+        <NavLink label = "Modificar combustible Parcialmente" href="/patchCombustible" />
+        <NavLink label = "Eliminar combustible" href="/deleteCombustible" />
     </NavLink>    
     </>
         </Grid.Col>

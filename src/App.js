@@ -6,7 +6,7 @@ import { BackofficeVehicles } from "./components/BackofficeVehicles";
 import { PutVehicle } from "./components/PutVehicle";
 import { PatchVehicle } from "./components/PatchVehicle";
 import { DeleteVehicle } from "./components/DeleteVehicle";
-
+import { BackofficeCategories } from "./components/BackofficeCategories";
 function App() {
   return (
     <Routes>
@@ -15,6 +15,7 @@ function App() {
       <Route path="/putVehicles" element={<PutVehicle />} />
       <Route path="/patchVehicle" element={<PatchVehicle />} />
       <Route path="/deleteVehicle" element={<DeleteVehicle />} />
+      <Route path="/categories" element={<BackofficeCategories />} />
     </Routes>
   );
 }

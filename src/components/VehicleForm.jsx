@@ -1,27 +1,35 @@
 import React ,{ useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { useForm } from 'react-hook-form';
-import { postVehicles , getCombustible, getMotors, getInsides, getDesigns, getTechnology, getCategory} from '../services/createVehicles';
+import { Box, Grid, TextInput, Button, Text, Title, Center, Image } from "@mantine/core";
+import { postVehicles} from '../services/Vehicles';
+import { getCombustible } from '../services/Combustible';
+import { getCategory } from '../services/Category';
+import { getMotors } from '../services/Motors';
+import { getInsides } from '../services/Inside';
+import {getDesigns} from '../services/Design';
+import {getTechnology} from '../services/Technology';
 
 export function VehicleForm() {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
+  
     try {
       // Construye el objeto con los datos a enviar
       const vehicleData = {
-        name: data.name,
-        year: data.year,
-        price: data.price,
-        description: data.description,
-        transmission: data.transmission,
-        screen: data.screen,
-        category_id: data.category_id,
-        combustible_id: data.combustible_id,
-        motor_id: data.motor_id,
-        inside_id: data.inside_id,
-        design_id: data.design_id,
-        technology_id: data.technology_id,
+        name: data?.name,
+        year: data?.year,
+        price: data?.price,
+        description: data?.description,
+        transmission: data?.transmission,
+        screen: data?.screen,
+        category_id: parseInt(data?.category_id),
+        combustible_id: parseInt (data?.combustible_id),
+        motor_id: parseInt(data?.motor_id),
+        inside_id: parseInt(data?.inside_id ),
+        design_id: parseInt(data?.design_id ),
+        technology_id: parseInt(data?.technology_id ),
       };
       const response = await postVehicles(vehicleData);
       console.log('Vehículo creado:', response);
@@ -95,14 +103,18 @@ export function VehicleForm() {
       Name:
       <input {...register("name")} />
       <br />
+      <br />
       Year:
       <input {...register("year")} />
+      <br />
       <br />
       Price:
       <input {...register("price")} />
       <br />
+      <br />
       Description:
       <input {...register("description")} />
+      <br />
       <br />
       Transmission:
       <select {...register("transmission")}>
@@ -110,8 +122,10 @@ export function VehicleForm() {
         <option value="automtic">Automatica</option>
       </select>
       <br />
+      <br />
       Screen:
       <input {...register("screen")} />
+      <br />
       <br />
       Categoria:
       <select {...register("category_id")} >
@@ -121,6 +135,7 @@ export function VehicleForm() {
           </option>
         ))}
       </select>
+      <br />
       <br /> 
       Combustible:
       <select {...register("combustible_id")}>
@@ -131,6 +146,7 @@ export function VehicleForm() {
         ))}
       </select>
       <br />
+      <br />
       Motor:
       <select {...register("motor_id")}>
         {motors?.map(motors => (
@@ -139,6 +155,7 @@ export function VehicleForm() {
           </option>
         ))}
       </select>
+      <br />
       <br />
       Interior:
       <select {...register("inside_id")}>
@@ -149,6 +166,7 @@ export function VehicleForm() {
         ))}
       </select>
       <br />
+      <br />
       Diseno:
       <select {...register("design_id")}>
         {designs?.map(designs => (
@@ -157,6 +175,7 @@ export function VehicleForm() {
           </option>
         ))}
       </select>
+      <br />
       <br />
       Tecnologia:
       <select {...register("technology_id")}>
@@ -168,7 +187,7 @@ export function VehicleForm() {
       </select>
       <br />
       <br /><br />
-      <input type="submit" />
+      <Center><input type="submit" /></Center>
     </form>
   );
 }

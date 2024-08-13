@@ -68,7 +68,7 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
-        <NavLink label = "Crear Categoria" href="#" />
+        <NavLink label = "Crear Categoria" href="/categories" />
         <NavLink label = "Modificar Categoria Totalmente" href="#" />
         <NavLink label = "Modificar Categoria Parcialmente" href="#" />
         <NavLink label = "Eliminar Categoria" href="#" />
@@ -77,6 +77,54 @@ export const Backoffice = () => {
     <NavLink 
     href="#"
     label = "Motores"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Crear Motor" href="#" />
+        <NavLink label = "Modificar Motor Totalmente" href="#" />
+        <NavLink label = "Modificar Motor Parcialmente" href="#" />
+        <NavLink label = "Eliminar Motor" href="#" />
+    </NavLink>    
+    <NavLink 
+    href="#"
+    label = "Interior"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Crear Motor" href="#" />
+        <NavLink label = "Modificar Motor Totalmente" href="#" />
+        <NavLink label = "Modificar Motor Parcialmente" href="#" />
+        <NavLink label = "Eliminar Motor" href="#" />
+    </NavLink>    
+    <NavLink 
+    href="#"
+    label = "Design"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Crear Motor" href="#" />
+        <NavLink label = "Modificar Motor Totalmente" href="#" />
+        <NavLink label = "Modificar Motor Parcialmente" href="#" />
+        <NavLink label = "Eliminar Motor" href="#" />
+    </NavLink>   
+    <NavLink 
+    href="#"
+    label = "Technology"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Crear Motor" href="#" />
+        <NavLink label = "Modificar Motor Totalmente" href="#" />
+        <NavLink label = "Modificar Motor Parcialmente" href="#" />
+        <NavLink label = "Eliminar Motor" href="#" />
+    </NavLink>     
+    <NavLink 
+    href="#"
+    label = "Combustibles"
     leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
     childrenOffset={28}
     defaultOpened

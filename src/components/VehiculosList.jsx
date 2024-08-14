@@ -1,10 +1,11 @@
-import { Title, Box, Grid, Stack, Table, Button } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button , Center} from "@mantine/core";
 import {getVehicles} from '../services/Vehicles' 
 import { useEffect, useState } from "react";
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from "react-router-dom";
 
 
 export const VehiculosList = () => {
@@ -17,6 +18,9 @@ export const VehiculosList = () => {
         };
         fetchVehicles();
     }, []);
+
+    const navigate = useNavigate();
+
     const rows = vehicles.map((vehicles) => (
         <Table.Tr key={vehicles.name}>
           <Table.Td>{vehicles.id}</Table.Td>  
@@ -32,7 +36,7 @@ export const VehiculosList = () => {
           <Table.Td>{vehicles?.design?.title}</Table.Td>
           <Table.Td>{vehicles?.technology?.title}</Table.Td>
           <Table.Td>{vehicles?.combustible?.name}</Table.Td>
-          <Table.Td><Button><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
+          <Table.Td><Button onClick={() => navigate(`/putVehicles/${vehicles.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
           <Table.Td><Button><FontAwesomeIcon icon={faTrash} /></Button></Table.Td>
 
         </Table.Tr>
@@ -46,7 +50,8 @@ export const VehiculosList = () => {
                         justify="center"
                         align="center"
                     >
-                        <Table>
+        <Center>
+         <Table>
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
@@ -69,6 +74,7 @@ export const VehiculosList = () => {
             </Table.Thead>
             <Table.Tbody>{rows}</Table.Tbody>
             </Table>
+            </Center>
                     </Stack>
                 </Grid.Col>
             </Grid>

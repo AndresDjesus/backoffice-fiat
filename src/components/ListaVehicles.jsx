@@ -8,26 +8,25 @@ import { VehiculosList } from './VehiculosList';
 export const ListVehicle = () => {
   function renderCards() {
     return (
+      
       <Box>
         <Grid>
-          <Grid.Col span={12}>
+          <Grid.Col span={2}>
             <Stack
               justify="center"
               align="flex-start"
             >
               <Group>
               <Backoffice />
-              <Title>Lista de Vehiculos</Title>
-              <VehiculosList />
             </Group>
             </Stack>
           </Grid.Col>
-          {/* <Grid.Col>
-            <VehiculosList />
-          </Grid.Col> */}
-
-          {/* <Grid.Col span={12}>  */}
-          {/* </Grid.Col>           */}
+          <Grid.Col span={10}>
+            <br /><br /><br />
+            <Center><Title>Lista de Vehiculos</Title></Center>
+            <br /><br />
+            <Center><VehiculosList /></Center>
+          </Grid.Col>
         </Grid>
       </Box>
     );

@@ -13,19 +13,18 @@ const postVehicles = async (data) => {
 }
 
 //Modificar un vehiculo totalmente
-const putVehicles = async (data) => {
-
-    const response = await fetch('http://localhost:3001/api/vehicles', {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
+const putVehicles = async (id, data) => {
+    const response = await fetch(`http://localhost:3001/api/vehicles/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
     })
     const result = await response.json()
     return result
-}
-
+  }
+  
 
 //Modificar un vehiculo parcialmente
 const patchVehicles = async (data) => {

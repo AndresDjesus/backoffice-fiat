@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     element: <BackofficeVehicles />,
   },
   {
-    path: "/putVehicles",
+    path: "/putVehicles/:id",
     element: <PutVehicle />,
   },
   {

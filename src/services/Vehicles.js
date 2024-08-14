@@ -55,9 +55,17 @@ const deleteVehicles = async (data) => {
     return result
 }
 
+//Obtener todos los vehiculos
+const getVehicles = async () => {
+    const response = await fetch('http://localhost:3001/api/vehicles')
+    const result = await response.json()
+    return result
+}
+
 module.exports = { 
     postVehicles,
     putVehicles,
     patchVehicles,
-    deleteVehicles
+    deleteVehicles,
+    getVehicles
 }

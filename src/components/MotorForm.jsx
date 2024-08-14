@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { postMotor } from "../services/Motors"
-import { Input, Button ,Center, Title } from "@mantine/core"
+import { Input, Button ,Center } from "@mantine/core"
 
 export  function MotorForm() {
   const { register, handleSubmit } = useForm()

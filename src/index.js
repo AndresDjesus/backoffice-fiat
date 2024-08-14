@@ -17,6 +17,7 @@ import {BackofficeCategories} from './components/BackofficeCategories';
 import {BackofficeMotor} from './components/BackofficeMotor';
 import { ListVehicle } from './components/ListaVehicles';
 import {BackofficeCombustible} from './components/BackofficeCombustible';
+import {BackofficeInterior} from './components/BackofficeInterior';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -57,7 +58,11 @@ const router = createBrowserRouter([
   {
     path: "/combustible",
     element: <BackofficeCombustible />,
-  }
+  },
+  {
+    path: "/interior",
+    element: <BackofficeInterior />,
+  },
 
 
 ]);

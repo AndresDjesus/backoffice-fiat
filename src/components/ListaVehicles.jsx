@@ -1,26 +1,33 @@
 import React, { useState } from 'react';
-import { TextInput, Button, Group, Text, Box, Grid, Center, Title,Image } from '@mantine/core';
+import { TextInput, Button, Group, Text, Box, Grid, Center, Title,Image, Stack } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { Backoffice } from './Backoffice'; // Assuming this is your backoffice component
 import Logo from '../imagenes/logo-navbar.png';
+import { VehiculosList } from './VehiculosList';
 
 export const ListVehicle = () => {
   function renderCards() {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Grid gutter="xl" style={{ maxWidth: '80%' }}>  {/* Add gutter for spacing */}
-          <Grid.Col span={6} > {/* Backoffice component takes 6 columns */}
-            <Box p={'0.5rem'}>
-            <Backoffice />
-            </Box>
+      <Box>
+        <Grid>
+          <Grid.Col span={12}>
+            <Stack
+              justify="center"
+              align="flex-start"
+            >
+              <Group>
+              <Backoffice />
+              <Title>Lista de Vehiculos</Title>
+              <VehiculosList />
+            </Group>
+            </Stack>
           </Grid.Col>
-          <Grid.Col span={6}> {/* FormVehicles component takes 6 columns */}
-          <br />
+          {/* <Grid.Col>
+            <VehiculosList />
+          </Grid.Col> */}
 
-
-
-          </Grid.Col>
-        
+          {/* <Grid.Col span={12}>  */}
+          {/* </Grid.Col>           */}
         </Grid>
       </Box>
     );

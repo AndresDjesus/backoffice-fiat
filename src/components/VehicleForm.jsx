@@ -14,13 +14,6 @@ export function VehicleForm() {
   const { register, handleSubmit, setValue } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-    console.log(data?.category_id);
-    console.log(data?.combustible_id);
-    console.log(data?.motor_id);
-    console.log(data?.inside_id );
-    console.log(data?.design_id );
-    console.log(data?.technology_id );
     try {
       // Construye el objeto con los datos a enviar
       const vehicleData = {
@@ -117,7 +110,7 @@ export function VehicleForm() {
       <Select
         label="Transmision" 
         data={["manual", "automatic"]}
-        onChange={(e) => setValue("transmission", e?.target?.value)}
+        onChange={(e) => setValue("transmission", e)}
       />
       <br />
       <br />
@@ -131,7 +124,10 @@ export function VehicleForm() {
           return {value: category?.id?.toString(), label: category?.name }
         })
       }
-        onChange={(e) => setValue("category_id", e?.target?.value)}
+        onChange={(e) => {
+          console.log(e)
+          setValue("category_id", e)
+        }}
       />
       <br />
       <br /> 
@@ -142,7 +138,7 @@ export function VehicleForm() {
             return {value: combustible?.id?.toString(), label: combustible?.name }
           })
         }
-        onChange={(e) => setValue("combustible_id", e?.target?.value)}
+        onChange={(e) => setValue("combustible_id", e)}
       />
       <br />
       <br />
@@ -153,7 +149,7 @@ export function VehicleForm() {
             return {value: motors?.id?.toString(), label: motors?.name }
           })
         }
-        onChange={(e) => setValue("motor_id", e?.target?.value)}
+        onChange={(e) => setValue("motor_id", e)}
       />
       <br />
       <br />
@@ -164,7 +160,7 @@ export function VehicleForm() {
             return {value: insides?.id?.toString(), label: insides?.content }
           })
         }
-        onChange={(e) => setValue("inside_id", e?.target?.value)}
+        onChange={(e) => setValue("inside_id", e)}
       />
       <br />
       <br />
@@ -175,7 +171,7 @@ export function VehicleForm() {
             return {value: designs?.id?.toString(), label: designs?.content }
           })
         }
-        onChange={(e) => setValue("design_id", e?.target?.value)}
+        onChange={(e) => setValue("design_id", e)}
       />
       <br />
       <br />
@@ -186,7 +182,7 @@ export function VehicleForm() {
             return {value: technology?.id?.toString(), label: technology?.title }
           })
         }
-        onChange={(e) => setValue("technology_id", e?.target?.value)}
+        onChange={(e) => setValue("technology_id", e)}
       />
       
       <br />

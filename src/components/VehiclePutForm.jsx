@@ -1,7 +1,9 @@
-import React ,{ useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import { useForm } from 'react-hook-form';
 import { Box, Grid, TextInput, Button , Text, Title, Center, Image , Input, Select} from '@mantine/core';
+
+import { useEffect, useState } from 'react';
+import { useForm , reset} from 'react-hook-form';
+import { getVehicleById } from '../services/Vehicles';
 import { putVehicles} from '../services/Vehicles';
 import { getCombustible } from '../services/Combustible';
 import { getCategory } from '../services/Category';
@@ -9,10 +11,13 @@ import { getMotors } from '../services/Motors';
 import { getInsides } from '../services/Inside';
 import {getDesigns} from '../services/Design';
 import {getTechnology} from '../services/Technology';
+import { useParams } from 'react-router-dom';
 
 // Nuevo componente para el formulario
 export function VehiclePutForm() {
-  const { register, handleSubmit, setValue } = useForm();
+
+  const { id } = useParams();
+  const { register, handleSubmit, setValue, reset } = useForm();
 
   const onSubmit = async (data) => {
     try {
@@ -31,7 +36,8 @@ export function VehiclePutForm() {
         design_id: Number(data?.design_id ),
         technology_id: Number(data?.technology_id ),
       };
-      const response = await putVehicles(vehicleData);
+      const response = await putVehicles(vehicleData, id);
+      console.log(vehicleData);
       console.log('Vehículo modificado:', response);
       // Manejar la respuesta del servidor
     } catch (error) {
@@ -40,6 +46,7 @@ export function VehiclePutForm() {
     }
   };
   
+  const [vehicleData, setVehicleData] = useState(null);
   const [combustible, setCombustible] = useState([]);
   const [category, setCategory] = useState([]);
   const [motors, setMotors] = useState([]);
@@ -78,16 +85,54 @@ export function VehiclePutForm() {
       setTechnologies(data || []);
     };
 
+    const fetchVehicle = async () => {
+      try {
+        const response = await getVehicleById(id);
+        console.log('Response:', response);
+        setVehicleData(response); // Suponiendo que la respuesta tiene un campo 'data'
+      } catch (error) {
+        console.error('Error fetching vehicle:', error);
+        // Mostrar mensaje de error al usuario
+      }
+    };
+
     fetchCombustible();
     fetchCategory();
     fetchMotors();
     fetchInsides();
     fetchDesigns();
     fetchTechnology();
+    fetchVehicle();
 
-  }, [])
+  }, []);
 
-  const navigate = useNavigate();
+   useEffect(() => {
+     if (vehicleData) {
+      
+  //     // setValue("name", vehicleData?.name);
+  //     // setValue("year", vehicleData?.year);
+  //     // setValue("price", vehicleData?.price);
+  //     // setValue("description", vehicleData?.description);
+  //     // setValue("transmission", vehicleData?.transmission);
+  //     // setValue("screen", vehicleData?.screen);
+  //     // setValue("category_id", vehicleData?.category_id);
+  //     // setValue("combustible_id", vehicleData?.combustible_id);
+  //     // setValue("motor_id", vehicleData?.motor_id);
+  //     // setValue("inside_id", vehicleData?.inside_id);
+  //     // setValue("design_id", vehicleData?.design_id);
+  //     // setValue("technology_id", vehicleData?.technology_id);
+       reset({
+         name: vehicleData?.name,
+         category_id: vehicleData?.category?.id?.toString(),
+       });
+     }
+  }, [vehicleData]); 
+
+
+
+  console.log(vehicleData, 'vehicleData');
+  console.log(vehicleData?.category?.id, "category_id");
+
   return (
     <Box>
         <Grid>
@@ -96,42 +141,48 @@ export function VehiclePutForm() {
     <form onSubmit={handleSubmit(onSubmit)}>
       {/* Campos del formulario */}
       Name:
-      <Input {...register("name")} />
+      <Input {...register("name")} defaultValue={vehicleData?.name}/>
       <br />
       <br />
       Year:
-      <Input {...register("year")} />
+      <Input {...register("year")} defaultValue={vehicleData?.year} />
       <br />
       <br />
       Price:
-      <Input {...register("price")} />
+      <Input {...register("price")} defaultValue={vehicleData?.price} />
       <br />
       <br />
       Description:
-      <Input {...register("description")} />
+      <Input {...register("description")} defaultValue={vehicleData?.description}  />
       <br />
       <br />
       <Select
         label="Transmision" 
         data={["manual", "automatic"]}
         onChange={(e) => setValue("transmission", e)}
+        value={vehicleData?.transmission?.toString()}
       />
       <br />
       <br />
       Screen:
-      <Input {...register("screen")} />
+      <Input {...register("screen")}  defaultValue={vehicleData?.screen}/>
       <br />
       <br />
       <Select 
         label="Categoria"
+        name="category_id"
+        comboboxProps={{ withinPortal: true }}
         data={category?.map((category) => { 
           return {value: category?.id?.toString(), label: category?.name }
-        })
+        }, )
       }
         onChange={(e) => {
           console.log(e)
           setValue("category_id", e)
-        }}
+        }
+        }
+        value={vehicleData?.category?.id?.toString()}
+       
       />
       <br />
       <br /> 
@@ -143,6 +194,7 @@ export function VehiclePutForm() {
           })
         }
         onChange={(e) => setValue("combustible_id", e)}
+        value={vehicleData?.combustible?.id?.toString()}
       />
       <br />
       <br />
@@ -154,6 +206,7 @@ export function VehiclePutForm() {
           })
         }
         onChange={(e) => setValue("motor_id", e)}
+        value={vehicleData?.motor?.id?.toString()}
       />
       <br />
       <br />
@@ -165,6 +218,7 @@ export function VehiclePutForm() {
           })
         }
         onChange={(e) => setValue("inside_id", e)}
+        value={vehicleData?.inside?.id?.toString()}
       />
       <br />
       <br />
@@ -176,6 +230,7 @@ export function VehiclePutForm() {
           })
         }
         onChange={(e) => setValue("design_id", e)}
+        value={vehicleData?.design?.id?.toString()}
       />
       <br />
       <br />
@@ -187,6 +242,7 @@ export function VehiclePutForm() {
           })
         }
         onChange={(e) => setValue("technology_id", e)}
+        value={vehicleData?.technology?.id?.toString()}
       />
       
       <br />
@@ -200,3 +256,35 @@ export function VehiclePutForm() {
   );
 }
 
+// export const VehiclePutForm = () => {
+  
+//   const { id }  = useParams();
+//   const [ vehicleData, setVehicleData ] = useState(undefined);
+
+//   useEffect( () => {
+//     const fetchVehicleById = async (id) => {
+//       console.log(id);
+//       const data = await getVehicleById(id);
+//       setVehicleData(data);  
+//     }
+
+//     fetchVehicleById(id);
+
+//   }, [id])
+  
+//   return (
+//     <Box>
+//       <Grid>
+//         <Grid.Col c={'blue'} span={{ span:12, md:12}}>
+//           <Input.Wrapper
+//             label="Nombre del vehiculo"
+//           >
+//             <Input
+//             />
+//           </Input.Wrapper>
+//           {/* <Input label="Nombre del vehiculo" {...register("name")} defaultValue={vehicleData?.name}  />  */}
+//         </Grid.Col>
+//       </Grid>
+//     </Box>
+//   )
+// } 

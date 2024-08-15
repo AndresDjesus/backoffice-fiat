@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button , Center} from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button , Center , Text} from "@mantine/core";
 import {getVehicles} from '../services/Vehicles' 
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -6,7 +6,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from "react-router-dom";
-
+import { useDisclosure, useMediaQuery } from '@mantine/hooks';
+import { Modal } from '@mantine/core';
+import { deleteVehicles } from "../services/Vehicles";
+import { useParams } from "react-router-dom";
 
 export const VehiculosList = () => {
 
@@ -19,7 +22,18 @@ export const VehiculosList = () => {
         fetchVehicles();
     }, []);
 
-    const navigate = useNavigate();
+
+
+    const [opened, { open, close }] = useDisclosure(false);
+  const isMobile = useMediaQuery('(max-width: 50em)');
+
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    // Implement your logic to delete the vehicle here (e.g., API call)
+    console.log("Vehicle deleted!"); // Placeholder for now
+    close(); // Close the modal after deletion
+  };
 
     const rows = vehicles.map((vehicles) => (
         <Table.Tr key={vehicles.name}>
@@ -37,11 +51,12 @@ export const VehiculosList = () => {
           <Table.Td>{vehicles?.technology?.title}</Table.Td>
           <Table.Td>{vehicles?.combustible?.name}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putVehicles/${vehicles.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
-          <Table.Td><Button><FontAwesomeIcon icon={faTrash} /></Button></Table.Td>
+          <Table.Td><Button onClick={open}><FontAwesomeIcon icon={faTrash} /></Button></Table.Td>
 
         </Table.Tr>
       ));
     return (
+        
         <Box>
             {/* <Title>Lista de Vehiculos</Title> */}
             <Grid>
@@ -50,6 +65,23 @@ export const VehiculosList = () => {
                         justify="center"
                         align="center"
                     >
+        <Modal
+              opened={opened}
+              onClose={close}
+              fullScreen={isMobile}
+              transitionProps={{ transition: 'fade', duration: 200 }}
+            >   
+              <Title>Eliminar Vehiculo</Title>
+              <Text>¿Está completamente seguro de que desea eliminar este vehículo?</Text>
+              <Stack spacing="sm" mt="md">
+                <Button variant="outline" onClick={close}>
+                  Cancelar
+                </Button>
+                <Button onClick={handleDelete}>
+                  Eliminar
+                </Button>
+              </Stack>
+            </Modal>
         <Center>
          <Table>
         <Table.Thead>

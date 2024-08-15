@@ -23,9 +23,6 @@ export const Backoffice = () => {
     >
       <NavLink href="/listVehicles" label= "Lista de Vehiculos" />
       <NavLink href="/vehiculos" label= "Crear Vehiculos" />
-      <NavLink label = "Modificar Vehiculo Totalmente" href="/putVehicles" />
-      <NavLink label = "Modificar Vehiculo Parcialmente" href="/patchVehicle" />
-      <NavLink label = "Eliminar Vehiculo" href="/deleteVehicle" />
     </NavLink>
 
     <NavLink 

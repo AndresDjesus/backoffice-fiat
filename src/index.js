@@ -20,7 +20,10 @@ import { ListVehicle } from './components/ListaVehicles';
 import {BackofficeCombustible} from './components/BackofficeCombustible';
 import {BackofficeInterior} from './components/BackofficeInterior';
 import { ListCategory } from './components/ListaCategory';
+import { ListInside } from './components/ListaInteriores';
 import { ListMotors } from './components/ListaMotors';
+import { PutMotor } from './components/PutMotors';
+import { PutInside} from './components/PutInside';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -71,12 +74,24 @@ const router = createBrowserRouter([
     element: <ListMotors />,
   },
   {
+    path: "/putMotor/:id",
+    element: <PutMotor />,
+  },
+  {
     path: "/combustible",
     element: <BackofficeCombustible />,
   },
   {
     path: "/interior",
     element: <BackofficeInterior />,
+  },
+  {
+    path: "/listInside",
+    element: <ListInside />,
+  },
+  {
+    path: "/putInside/:id",
+    element: <PutInside />,
   },
 
 

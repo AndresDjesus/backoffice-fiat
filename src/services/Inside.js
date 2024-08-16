@@ -1,13 +1,21 @@
 //Obtener Insides 
-const getInsides = async () => {
+export const getInsides = async () => {
     
     const response = await fetch('http://localhost:3001/api/inside')
     const result = await response.json()
     return result
 }
 
+//Obtener un Inside por ID
+export const getInsideById = async (id) => {
+    
+    const response = await fetch(`http://localhost:3001/api/inside/${id}`)
+    const result = await response.json()
+    return result
+}
+
 //Crear un Inside
-const postInside = async (data) => {
+export const postInside = async (data) => {
 
     const response = await fetch('http://localhost:3001/api/inside', {
         method: 'POST',
@@ -21,9 +29,9 @@ const postInside = async (data) => {
 }
 
 //Modificar un Inside 
-const putInside = async (data) => {
+export const putInside = async (data, id) => {
 
-    const response = await fetch('http://localhost:3001/api/inside', {
+    const response = await fetch(`http://localhost:3001/api/inside/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -35,7 +43,7 @@ const putInside = async (data) => {
 }
 
 //Modificar un Inside Parcialmente
-const patchInside = async (data) => {
+export const patchInside = async (data) => {
     
     const response = await fetch('http://localhost:3001/api/inside', {
         method: 'PATCH',
@@ -49,23 +57,11 @@ const patchInside = async (data) => {
 }
 
 //Eliminar un Inside
-const deleteInside = async (data) => {
 
-    const response = await fetch('http://localhost:3001/api/inside', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    const result = await response.json()
-    return result
-}   
-
-module.exports = { 
-    getInsides,
-    postInside,
-    putInside,
-    patchInside,
-    deleteInside 
-}
+export const deleteInside = async (id) => {
+    const response = await fetch(`http://localhost:3001/api/categories/${id}`, {
+      method: 'DELETE',
+    });
+    const result = await response.json();
+    return result;
+  };

@@ -87,10 +87,8 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
+        <NavLink label = "Lista de Interiores" href="/listInside" />
         <NavLink label = "Crear Interior" href="/interior" />
-        <NavLink label = "Modificar Interior Totalmente" href="/putInterior" />
-        <NavLink label = "Modificar Interior Parcialmente" href="/patchInterior" />
-        <NavLink label = "Eliminar Interior" href="/deleteInterior" />
     </NavLink>    
     <NavLink 
     href="#"

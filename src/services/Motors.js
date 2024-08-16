@@ -29,9 +29,9 @@ export const postMotor = async (data) => {
 }
 
 //Modificar un Motor 
-export const putMotor = async (data) => {
+export const putMotor = async (data , id) => {
 
-    const response = await fetch('http://localhost:3001/api/motors', {
+    const response = await fetch(`http://localhost:3001/api/motors/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'

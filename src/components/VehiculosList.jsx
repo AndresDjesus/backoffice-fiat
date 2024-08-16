@@ -1,42 +1,49 @@
-import { Title, Box, Grid, Stack, Table, Button , Center , Text} from "@mantine/core";
-import {getVehicles} from '../services/Vehicles' 
+import { Title, Box, Grid, Stack, Table, Button, Center, Text } from "@mantine/core";
+import { getVehicles, deleteVehicles} from "../services/Vehicles"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTrash } from '@fortawesome/free-solid-svg-icons'; 
+
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';  
+
 import { useNavigate } from "react-router-dom";
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
 import { Modal } from '@mantine/core';
-import { deleteVehicles } from "../services/Vehicles";
-import { useParams } from "react-router-dom";
 
 export const VehiculosList = () => {
 
     const [vehicles , setVehicles] = useState([]);
+    const [selectedVehicleId, setSelectedVehicleId] = useState(null); 
+
     useEffect(() => {
-        const fetchVehicles = async () => {
-            const data = await getVehicles();
-            setVehicles(data || []);
-        };
-        fetchVehicles();
-    }, []);
-
-
-
-    const [opened, { open, close }] = useDisclosure(false);
-  const isMobile = useMediaQuery('(max-width: 50em)');
+    const fetchVehicles = async () => {
+      const data = await getVehicles();
+      setVehicles(data || []);
+    };
+    fetchVehicles();
+  }, []);
 
   const navigate = useNavigate();
+  const [opened, { open, close }] = useDisclosure(false);
+  const isMobile = useMediaQuery('(max-width: 50em)');
 
-  const handleDelete = () => {
-    // Implement your logic to delete the vehicle here (e.g., API call)
-    console.log("Vehicle deleted!"); // Placeholder for now
-    close(); // Close the modal after deletion
+  const handleDelete = async (vehicleId) => {
+    try {
+      await deleteVehicles(vehicleId); // Llama a la función de eliminación
+      // Actualiza el estado local de los vehículos
+      setVehicles(vehicles.filter((vehicle) => vehicle.id !== vehicleId));
+      close(); // Cierra el modal
+      console.log("Vehículo eliminado correctamente");
+    } catch (error) {
+      console.error("Error al eliminar el vehículo:", error);
+      // Muestra un mensaje de error al usuario
+      alert("Ocurrió un error al eliminar el vehículo. Por favor, inténtalo de nuevo más tarde.");
+    }
   };
 
     const rows = vehicles.map((vehicles) => (
-        <Table.Tr key={vehicles.name}>
+        <Table.Tr key={vehicles.id}>
           <Table.Td>{vehicles.id}</Table.Td>  
           <Table.Td>{vehicles.year}</Table.Td>
           <Table.Td>{vehicles.name}</Table.Td>
@@ -51,7 +58,7 @@ export const VehiculosList = () => {
           <Table.Td>{vehicles?.technology?.title}</Table.Td>
           <Table.Td>{vehicles?.combustible?.name}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putVehicles/${vehicles.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
-          <Table.Td><Button onClick={open}><FontAwesomeIcon icon={faTrash} /></Button></Table.Td>
+          <Table.Td><Button onClick={() => { setSelectedVehicleId(vehicles.id); open(); }}><FontAwesomeIcon icon={faTrash} /></Button></Table.Td>
 
         </Table.Tr>
       ));
@@ -77,7 +84,7 @@ export const VehiculosList = () => {
                 <Button variant="outline" onClick={close}>
                   Cancelar
                 </Button>
-                <Button onClick={handleDelete}>
+                <Button onClick={() => handleDelete(selectedVehicleId)}>
                   Eliminar
                 </Button>
               </Stack>

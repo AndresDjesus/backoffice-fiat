@@ -1,5 +1,5 @@
 //Obtener Categories 
-const getCategory = async () => {
+export const getCategory = async () => {
 
     const response = await fetch('http://localhost:3001/api/categories')
     const result = await response.json()
@@ -8,7 +8,7 @@ const getCategory = async () => {
 }
 
 //Crear una Category
-const postCategory = async (data) => {
+export const postCategory = async (data) => {
 
     const response = await fetch('http://localhost:3001/api/categories', {
         method: 'POST',
@@ -22,9 +22,9 @@ const postCategory = async (data) => {
 }
 
 //Modificar una Category
-const putCategory = async (data) => {
+export const putCategory = async (data, id) => {
 
-    const response = await fetch('http://localhost:3001/api/categories', {
+    const response = await fetch(`http://localhost:3001/api/categories/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -36,7 +36,7 @@ const putCategory = async (data) => {
 }
 
 //Modificar una categoria Parcialmente
-const patchCategory = async (data) => {
+export const patchCategory = async (data) => {
 
     const response = await fetch('http://localhost:3001/api/categories', {
         method: 'PATCH',
@@ -48,23 +48,18 @@ const patchCategory = async (data) => {
 }
 
 //Eliminar una Category
-const deleteCategory = async (data) => {
+export const deleteCategory = async (id) => {
+    const response = await fetch(`http://localhost:3001/api/categories/${id}`, {
+      method: 'DELETE',
+    });
+    const result = await response.json();
+    return result;
+  };
 
-    const response = await fetch('http://localhost:3001/api/categories', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
+//Obtener Category por Id 
+
+ export const getCategoryById = async (id) => {
+    const response = await fetch(`http://localhost:3001/api/categories/${id}`)
     const result = await response.json()
     return result
 }
-
-module.exports = { 
-    getCategory,
-    postCategory,
-    putCategory,
-    patchCategory,
-    deleteCategory
-}   

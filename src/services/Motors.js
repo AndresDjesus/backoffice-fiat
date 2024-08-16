@@ -1,13 +1,21 @@
 //Obtener Motors
-const getMotors = async () => {
+export const getMotors = async () => {
 
     const response = await fetch('http://localhost:3001/api/motors')
     const result = await response.json()
     return result
 }
 
+//Obtener Motor por ID
+export const getMotorById = async (id) => {
+
+    const response = await fetch(`http://localhost:3001/api/motors/${id}`)
+    const result = await response.json()
+    return result   
+}
+
 //Crear un Motor
-const postMotor = async (data) => {
+export const postMotor = async (data) => {
     
     const response = await fetch('http://localhost:3001/api/motors', {
         method: 'POST',
@@ -21,7 +29,7 @@ const postMotor = async (data) => {
 }
 
 //Modificar un Motor 
-const putMotor = async (data) => {
+export const putMotor = async (data) => {
 
     const response = await fetch('http://localhost:3001/api/motors', {
         method: 'PUT',
@@ -35,7 +43,7 @@ const putMotor = async (data) => {
 }
 
 //Modificar un Motor Parcialmente
-const patchMotor = async (data) => {
+export const patchMotor = async (data) => {
     
     const response = await fetch('http://localhost:3001/api/motors', {
         method: 'PATCH',
@@ -49,24 +57,11 @@ const patchMotor = async (data) => {
 }
 
 //Eliminar un Motor
-const deleteMotor = async (data) => {
-    
-    const response = await fetch('http://localhost:3001/api/motors', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    const result = await response.json()
-    return result
-}
-
-module.exports = { 
-    getMotors,
-    postMotor,
-    putMotor,
-    patchMotor,
-    deleteMotor
-}
+export const deleteMotor = async (id) => {
+    const response = await fetch(`http://localhost:3001/api/motors/${id}`, {
+      method: 'DELETE',
+    });
+    const result = await response.json();
+    return result;
+  };
 

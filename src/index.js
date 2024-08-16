@@ -11,6 +11,7 @@ import {
 import {Backoffice} from './components/Backoffice';
 import {BackofficeVehicles} from './components/BackofficeVehicles';
 import {PutVehicle} from './components/PutVehicle';
+import { PutCategory } from './components/PutCategory';
 import {PatchVehicle} from './components/PatchVehicle';
 import {DeleteVehicle} from './components/DeleteVehicle';
 import {BackofficeCategories} from './components/BackofficeCategories';
@@ -18,6 +19,8 @@ import {BackofficeMotor} from './components/BackofficeMotor';
 import { ListVehicle } from './components/ListaVehicles';
 import {BackofficeCombustible} from './components/BackofficeCombustible';
 import {BackofficeInterior} from './components/BackofficeInterior';
+import { ListCategory } from './components/ListaCategory';
+import { ListMotors } from './components/ListaMotors';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -52,8 +55,20 @@ const router = createBrowserRouter([
     element: <BackofficeCategories />,
   },
   {
+    path: "/listCategories",
+    element: <ListCategory />,
+  },
+  {
+    path: "/putCategory/:id",
+    element: <PutCategory />,
+  },
+  {
     path: "/motors",
     element: <BackofficeMotor />,
+  },
+  {
+    path: "/listMotors",
+    element: <ListMotors />,
   },
   {
     path: "/combustible",

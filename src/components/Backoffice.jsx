@@ -67,9 +67,7 @@ export const Backoffice = () => {
     defaultOpened
     >
         <NavLink label = "Crear Categoria" href="/categories" />
-        <NavLink label = "Modificar Categoria Totalmente" href="/putCategories"/>
-        <NavLink label = "Modificar Categoria Parcialmente" href="/patchCategory" />
-        <NavLink label = "Eliminar Categoria" href="/deleteCategory" />
+        <NavLink label = "Lista de Categorias" href="/listCategories"/>
     </NavLink>    
 
     <NavLink 
@@ -79,10 +77,8 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
+         <NavLink label = "Lista de Motores" href="/listMotors" />
         <NavLink label = "Crear Motor" href="/motors" />
-        <NavLink label = "Modificar Motor Totalmente" href="/putMotors" />
-        <NavLink label = "Modificar Motor Parcialmente" href="/patchMotor" />
-        <NavLink label = "Eliminar Motor" href="/deleteMotor" />
     </NavLink>    
     <NavLink 
     href="#"

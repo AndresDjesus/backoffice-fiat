@@ -124,6 +124,16 @@ export function VehiclePutForm() {
        reset({
          name: vehicleData?.name,
          category_id: vehicleData?.category?.id?.toString(),
+         combustible_id: vehicleData?.combustible?.id?.toString(),
+         motor_id: vehicleData?.motor?.id?.toString(),
+         inside_id: vehicleData?.inside?.id?.toString(),
+         design_id: vehicleData?.design?.id?.toString(),
+         technology_id: vehicleData?.technology?.id?.toString(),
+         year: vehicleData?.year,
+         price: vehicleData?.price,
+         description: vehicleData?.description,
+         transmission: vehicleData?.transmission,
+         screen: vehicleData?.screen
        });
      }
   }, [vehicleData]); 
@@ -188,6 +198,7 @@ export function VehiclePutForm() {
       <br /> 
       <Select 
         label="Combustible"
+        name="combustible_id"
         data={
           combustible?.map((combustible) => { 
             return {value: combustible?.id?.toString(), label: combustible?.name }
@@ -256,35 +267,3 @@ export function VehiclePutForm() {
   );
 }
 
-// export const VehiclePutForm = () => {
-  
-//   const { id }  = useParams();
-//   const [ vehicleData, setVehicleData ] = useState(undefined);
-
-//   useEffect( () => {
-//     const fetchVehicleById = async (id) => {
-//       console.log(id);
-//       const data = await getVehicleById(id);
-//       setVehicleData(data);  
-//     }
-
-//     fetchVehicleById(id);
-
-//   }, [id])
-  
-//   return (
-//     <Box>
-//       <Grid>
-//         <Grid.Col c={'blue'} span={{ span:12, md:12}}>
-//           <Input.Wrapper
-//             label="Nombre del vehiculo"
-//           >
-//             <Input
-//             />
-//           </Input.Wrapper>
-//           {/* <Input label="Nombre del vehiculo" {...register("name")} defaultValue={vehicleData?.name}  />  */}
-//         </Grid.Col>
-//       </Grid>
-//     </Box>
-//   )
-// } 

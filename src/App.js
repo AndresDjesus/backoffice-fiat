@@ -13,6 +13,7 @@ import { BackofficeInterior } from "./components/BackofficeInterior";
 import { BackofficeDesign } from "./components/BackofficeDesign";
 import { BackofficeTechnology } from "./components/BackofficeTechnology";
 import { BackofficeService } from "./components/BackofficeService";
+import { BackofficeCompanyProfile} from "./components/BackofficeCompanyProfile"
 function App() {
   return (
     <Routes>
@@ -28,6 +29,7 @@ function App() {
       <Route path="/design" element={<BackofficeDesign />} />
       <Route path="/technology" element= {<BackofficeTechnology />} />
       <Route path="/service" element = {<BackofficeService/>} />
+      <Route path="/companyProfile" element = {<BackofficeCompanyProfile/>} />
     </Routes>
   );
 }

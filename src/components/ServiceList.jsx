@@ -30,7 +30,7 @@ export const ServiceList = () => {
     try {
       await deleteService(serviceId); // Llama a la función de eliminación
       // Actualiza el estado local de los vehículos
-      setInside(service.filter((service) => service.id !== serviceId));
+      setService(service.filter((service) => service.id !== serviceId));
       close(); // Cierra el modal
       console.log("Servicio eliminado correctamente");
     } catch (error) {

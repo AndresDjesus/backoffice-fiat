@@ -1,0 +1,52 @@
+import { useForm } from "react-hook-form"
+import { postCompanyProfile} from "../services/CompanyProfile"
+import { Input, Button ,Center } from "@mantine/core"
+
+export  function CompanyProfileForm() {
+  const { register, handleSubmit } = useForm()
+  const onSubmit = async (data) => {
+    try {
+        // Construye el objeto con los datos a enviar
+        const companyProfileData = {
+          active: data?.active,
+          mission: data?.mission,
+          vision: data?.vision,
+          history: data?.history,
+          schedule: data?.schedule
+        };
+        const response = await postCompanyProfile(companyProfileData);
+        console.log('Perfil creado:', response);
+        // Manejar la respuesta del servidor
+      } catch (error) {
+        console.error('Error creando el Perfil:', error);
+        // Manejar el error
+      } 
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      Estado del perfil:
+      <Input {...register("active")} />
+      <br />
+      <br />
+      Mision de la Empresa:
+      <Input {...register("mission")} />
+      <br />
+      <br />
+      Vision de la Empresa:
+      <Input {...register("vision")} />
+      <br />
+      <br />
+      Historia de la Empresa:
+      <Input {...register("history")} />
+      <br />
+      <br />
+      Horario de trabajo de la Empresa:
+      <Input {...register("schedule ")} />
+      <br />
+      <br />
+
+      <Center><Button type="submit">Crear Perfil</Button></Center>
+    </form>
+  )
+}

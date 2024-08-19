@@ -18,7 +18,7 @@ export function ServicePutForm() {
       // Construye el objeto con los datos a enviar
       const serviceData = {
         name: data?.name,
-        description : data?.decription,
+        description : data?.description,
       };
       const response = await putService(serviceData, id);
       console.log(serviceData);

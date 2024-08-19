@@ -35,6 +35,7 @@ import { PutTechnology } from './components/PutTechnology';
 import { BackofficeService } from './components/BackofficeService';
 import { ListService} from './components/ListaService';
 import { PutService } from './components/PutService';
+import { BackofficeCompanyProfile } from './components/BackofficeCompanyProfile';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -145,8 +146,12 @@ const router = createBrowserRouter([
     element: <ListService/>
   },
   {
-    path: "/putService",
+    path: "/putService/:id",
     element: <PutService/>
+  },
+  {
+    path: "/companyProfile",
+    element: <BackofficeCompanyProfile/>
   },
 
 

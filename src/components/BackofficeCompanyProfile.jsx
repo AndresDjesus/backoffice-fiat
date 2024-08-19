@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { TextInput, Button, Group, Text, Box, Grid, Center, Title,Image } from '@mantine/core';
-import { FormCombustible } from './formCombustible'; // Assuming this is your form component
+import { FormCompanyProfile } from './formCompanyProfile'; // Assuming this is your form component
 import { Backoffice } from './Backoffice'; // Assuming this is your backoffice component
 import Logo from '../imagenes/logo-navbar.png';
 
-export const BackofficeCombustible = () => {
+export const BackofficeCompanyProfile = () => {
   function renderCards() {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -20,7 +20,7 @@ export const BackofficeCombustible = () => {
 
             <Center >
                 <Box p="xl" sx={{ display: 'flex', alignItems: 'center' }}>
-                <FormCombustible />
+                <FormCompanyProfile />
                 </Box>
             </Center>
           </Grid.Col>

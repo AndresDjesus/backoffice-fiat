@@ -59,7 +59,7 @@ export const patchInside = async (data) => {
 //Eliminar un Inside
 
 export const deleteInside = async (id) => {
-    const response = await fetch(`http://localhost:3001/api/categories/${id}`, {
+    const response = await fetch(`http://localhost:3001/api/inside/${id}`, {
       method: 'DELETE',
     });
     const result = await response.json();

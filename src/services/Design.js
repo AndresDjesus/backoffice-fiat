@@ -1,13 +1,21 @@
 //Obtener Designs
-const getDesigns = async () => {
+export const getDesigns = async () => {
     
     const response = await fetch('http://localhost:3001/api/design')
     const result = await response.json()
     return result
 }
 
+//Obtener Design por Id 
+export const getDesignById = async (id) => {
+    
+    const response = await fetch(`http://localhost:3001/api/design/${id}`)
+    const result = await response.json()
+    return result
+}
+
 //Crear un Design
-const postDesign = async (data) => {    
+export const postDesign = async (data) => {    
 
     const response = await fetch('http://localhost:3001/api/design', {
         method: 'POST',
@@ -21,9 +29,9 @@ const postDesign = async (data) => {
 }
 
 //Modificar un Design
-const putDesign = async (data) => {
+export const putDesign = async (data, id) => {
 
-    const response = await fetch('http://localhost:3001/api/design', {
+    const response = await fetch(`http://localhost:3001/api/design/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -35,9 +43,9 @@ const putDesign = async (data) => {
 }
 
 //Modificar un Design parcialmente
-const patchDesign = async (data) => {
+export const patchDesign = async (data, id) => {
     
-    const response = await fetch('http://localhost:3001/api/design', {
+    const response = await fetch(`http://localhost:3001/api/design/${id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -49,23 +57,10 @@ const patchDesign = async (data) => {
 }
 
 //Eliminar un Design
-const deleteDesign = async (data) => {  
-
-    const response = await fetch('http://localhost:3001/api/design', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    const result = await response.json()
-    return result
-}
-
-    module.exports = { 
-    getDesigns,
-    postDesign,
-    putDesign,
-    patchDesign,
-    deleteDesign 
-    }
+export const deleteDesign = async (id) => {
+    const response = await fetch(`http://localhost:3001/api/design/${id}`, {
+      method: 'DELETE',
+    });
+    const result = await response.json();
+    return result;
+  };

@@ -97,10 +97,8 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
+        <NavLink label = "Lista de Disenos" href="/listDesign" />
         <NavLink label = "Crear Design" href="/design" />
-        <NavLink label = "Modificar Design Totalmente" href="/putDesign" />
-        <NavLink label = "Modificar Design Parcialmente" href="/patchDesign" />
-        <NavLink label = "Eliminar Design" href="/deleteDesign" />
     </NavLink>   
     <NavLink 
     href="#"
@@ -109,10 +107,8 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
+        <NavLink label = "Lista de Tecnologias" href="/listTechnology" />
         <NavLink label = "Crear Technology" href="/technology" />
-        <NavLink label = "Modificar technology Totalmente" href="/putTechnology" />
-        <NavLink label = "Modificar technology Parcialmente" href="/patchTechnology" />
-        <NavLink label = "Eliminar Technology" href="/deleteTechnology" />
     </NavLink>     
     <NavLink 
     href="#"
@@ -121,11 +117,19 @@ export const Backoffice = () => {
     childrenOffset={28}
     defaultOpened
     >
+         <NavLink label = "Lista de combustibles" href="/listCombustible" />
         <NavLink label = "Crear Combustible" href="/combustible" />
-        <NavLink label = "Modificar combustible Totalmente" href="/putCombustible" />
-        <NavLink label = "Modificar combustible Parcialmente" href="/patchCombustible" />
-        <NavLink label = "Eliminar combustible" href="/deleteCombustible" />
-    </NavLink>    
+    </NavLink>   
+    <NavLink 
+    href="#"
+    label = "Servicios"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Lista de Servicios" href="/listService" />
+        <NavLink label = "Crear Servicio" href="/service" />
+    </NavLink>     
     </>
         </Grid.Col>
     </Grid>

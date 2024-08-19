@@ -1,14 +1,22 @@
 //Obtener Combustibles
 
-const getCombustible = async () => {
+export const getCombustible = async () => {
 
     const response = await fetch('http://localhost:3001/api/combustible')
     const result = await response.json()
     return result
 }
 
+//Obtener combustible por id 
+export const getCombustibleById = async (id) => {
+    
+    const response = await fetch(`http://localhost:3001/api/combustible/${id}`)
+    const result = await response.json()
+    return result
+}
+
 //Crear un Combustible
-const postCombustible = async (data) => {
+export const postCombustible = async (data) => {
 
     const response = await fetch('http://localhost:3001/api/combustible', {
         method: 'POST',
@@ -22,9 +30,9 @@ const postCombustible = async (data) => {
 }
 
 //Modificar un Combustible
-const putCombustible = async (data) => {
+export const putCombustible = async (data, id) => {
 
-    const response = await fetch('http://localhost:3001/api/combustible', {
+    const response = await fetch(`http://localhost:3001/api/combustible/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -36,7 +44,7 @@ const putCombustible = async (data) => {
 }
 
 //Modificar un Combustible parcialmente
-const patchCombustible = async (data) => {
+export const patchCombustible = async (data) => {
 
     const response = await fetch('http://localhost:3001/api/combustible', {
         method: 'PATCH',
@@ -50,23 +58,12 @@ const patchCombustible = async (data) => {
 }
 
 //Eliminar un Combustible
-const deleteCombustible = async (data) => {
 
-    const response = await fetch('http://localhost:3001/api/combustible', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    const result = await response.json()
-    return result
-}
+export const deleteCombustible = async (id) => {
+    const response = await fetch(`http://localhost:3001/api/combustible/${id}`, {
+      method: 'DELETE',
+    });
+    const result = await response.json();
+    return result;
+  };
 
-module.exports = { 
-    getCombustible,
-    putCombustible,
-    patchCombustible,
-    deleteCombustible,
-    postCombustible
- }

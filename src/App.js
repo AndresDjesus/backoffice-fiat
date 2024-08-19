@@ -10,6 +10,9 @@ import { BackofficeCategories } from "./components/BackofficeCategories";
 import { BackofficeMotor } from "./components/BackofficeMotor";
 import {BackofficeCombustible} from "./components/BackofficeCombustible";
 import { BackofficeInterior } from "./components/BackofficeInterior";
+import { BackofficeDesign } from "./components/BackofficeDesign";
+import { BackofficeTechnology } from "./components/BackofficeTechnology";
+import { BackofficeService } from "./components/BackofficeService";
 function App() {
   return (
     <Routes>
@@ -22,6 +25,9 @@ function App() {
       <Route path="/motors" element={<BackofficeMotor />} />
       <Route path="/combustible" element={<BackofficeCombustible />} />
       <Route path="/interior" element={<BackofficeInterior />} />
+      <Route path="/design" element={<BackofficeDesign />} />
+      <Route path="/technology" element= {<BackofficeTechnology />} />
+      <Route path="/service" element = {<BackofficeService/>} />
     </Routes>
   );
 }

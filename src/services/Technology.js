@@ -1,13 +1,21 @@
 //Obtener Technologies 
-const getTechnology = async () => {
+export const getTechnology = async () => {
 
     const response = await fetch('http://localhost:3001/api/technology')
     const result = await response.json()
     return result
 }
 
+//Obtener technology por id
+
+export const getTechnologyById = async (id) => {
+    
+    const response = await fetch(`http://localhost:3001/api/technology/${id}`)
+    const result = await response.json()
+    return result
+}
 //Crear una Technology
-const postTechnology = async (data) => {
+export const postTechnology = async (data) => {
 
     const response = await fetch('http://localhost:3001/api/technology', {
         method: 'POST',
@@ -21,9 +29,9 @@ const postTechnology = async (data) => {
 }
 
 //Modificar una Technology
-const putTechnology = async (data) => {
+export const putTechnology = async (data, id) => {
 
-    const response = await fetch('http://localhost:3001/api/technology', {
+    const response = await fetch(`http://localhost:3001/api/technology/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -35,7 +43,7 @@ const putTechnology = async (data) => {
 }
 
 //Modificar una Technology Parcialmente
-const patchTechnology = async (data) => {
+export const patchTechnology = async (data) => {
     
     const response = await fetch('http://localhost:3001/api/technology', {
         method: 'PATCH',
@@ -49,22 +57,11 @@ const patchTechnology = async (data) => {
 }
 
 //Eliminar una Technology
-const deleteTechnology = async (data) => {
 
-    const response = await fetch('http://localhost:3001/api/technology', {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-    })
-    const result = await response.json()
-    return result
-}
-module.exports = { 
-    getTechnology,
-    postTechnology,
-    putTechnology,
-    patchTechnology,
-    deleteTechnology 
-}
+export const deleteTechnology = async (id) => {
+    const response = await fetch(`http://localhost:3001/api/technology/${id}`, {
+      method: 'DELETE',
+    });
+    const result = await response.json();
+    return result;
+  };

@@ -36,6 +36,11 @@ import { BackofficeService } from './components/BackofficeService';
 import { ListService} from './components/ListaService';
 import { PutService } from './components/PutService';
 import { BackofficeCompanyProfile } from './components/BackofficeCompanyProfile';
+import { ListCompanyProfile } from './components/ListaCompanyProfile';
+import { PutCompanyProfile } from './components/PutCompanyProfile';
+import { BackofficeCompany } from './components/BackofficeCompany';
+import { ListCompany } from './components/ListaCompany';
+import { PutCompany } from './components/PutCompany';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -153,8 +158,26 @@ const router = createBrowserRouter([
     path: "/companyProfile",
     element: <BackofficeCompanyProfile/>
   },
-
-
+  {
+    path: "/listCompanyProfile",
+    element: <ListCompanyProfile/>
+  },
+  {
+    path: "/putCompanyProfile/:id",
+    element: <PutCompanyProfile/>
+  },
+  {
+    path: "/company",
+    element: <BackofficeCompany/>
+  },
+  {
+    path: "/listCompany",
+    element: <ListCompany/>
+  },
+  {
+    path: "/putCompany/:id",
+    element: <PutCompany/>
+  },
 
 ]);
 

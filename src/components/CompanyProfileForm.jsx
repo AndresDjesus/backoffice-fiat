@@ -1,13 +1,16 @@
+import React ,{ useEffect, useState } from 'react';
 import { useForm } from "react-hook-form"
 import { postCompanyProfile} from "../services/CompanyProfile"
-import { Input, Button ,Center } from "@mantine/core"
+import { Input, Button ,Center, Select } from "@mantine/core"
+import { getCompanys} from "../services/Company"
 
 export  function CompanyProfileForm() {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit, setValue } = useForm()
   const onSubmit = async (data) => {
     try {
         // Construye el objeto con los datos a enviar
         const companyProfileData = {
+          company_id: Number (data?.company_id),
           active: data?.active,
           mission: data?.mission,
           vision: data?.vision,
@@ -21,7 +24,16 @@ export  function CompanyProfileForm() {
         console.error('Error creando el Perfil:', error);
         // Manejar el error
       } 
-  }
+  };
+
+  const [company, setCompany] = useState([]);
+  useEffect(() => {
+    const fetchCompany = async () => {
+      const data = await getCompanys();
+      setCompany(data || []);
+    };
+    fetchCompany();
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -42,9 +54,22 @@ export  function CompanyProfileForm() {
       <br />
       <br />
       Horario de trabajo de la Empresa:
-      <Input {...register("schedule ")} />
+      <Input {...register("schedule")} />
       <br />
       <br />
+      <Select 
+        label="Nombre de la Empresa"
+        data={company?.map((company) => { 
+          return {value: company?.id?.toString(), label: company?.name }
+        })
+      }
+        onChange={(e) => {
+          console.log(e)
+          setValue("company_id", e)
+        }}
+      />
+      <br />
+      <br /> 
 
       <Center><Button type="submit">Crear Perfil</Button></Center>
     </form>

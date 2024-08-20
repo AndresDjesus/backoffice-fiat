@@ -140,6 +140,16 @@ export const Backoffice = () => {
         <NavLink label = "Lista de Perfiles de la Empresa" href="/listCompanyProfile" />
         <NavLink label = "Crear Perfil de la Empresa" href="/companyProfile" />
     </NavLink>    
+    <NavLink 
+    href="#"
+    label = "Empresa"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Lista de Empresas" href="/listCompany" />
+        <NavLink label = "Crear Empresa" href="/company" />
+    </NavLink>  
     </>
         </Grid.Col>
     </Grid>

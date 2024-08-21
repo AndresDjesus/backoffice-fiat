@@ -42,14 +42,14 @@ export const CompanyProfileList = () => {
 
     const rows = companyProfile.map((companyProfile) => (
         <Table.Tr key={companyProfile.id} >
-          <Table.Td>{companyProfile.id}</Table.Td>  
-          <Table.Td>{companyProfile.active}</Table.Td>
-          <Table.Td>{companyProfile.misssion}</Table.Td>
-          <Table.Td>{companyProfile.vision}</Table.Td>
-          <Table.Td>{companyProfile.history}</Table.Td>
-          <Table.Td>{companyProfile.schedule}</Table.Td>
-          <Table.Td>{companyProfile.company?.name}</Table.Td>
-          <Table.Td><Button onClick={() => navigate(`/putCompany/${companyProfile.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
+          <Table.Td>{companyProfile?.id}</Table.Td>  
+          <Table.Td>{companyProfile?.active === true ? "Activo" : "Inactivo"}</Table.Td>
+          <Table.Td>{companyProfile?.mission}</Table.Td>
+          <Table.Td>{companyProfile?.vision}</Table.Td>
+          <Table.Td>{companyProfile?.history}</Table.Td>
+          <Table.Td>{companyProfile?.schedule}</Table.Td>
+          <Table.Td>{companyProfile?.profile?.name}</Table.Td>
+          <Table.Td><Button onClick={() => navigate(`/putCompanyProfile/${companyProfile.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
           <Table.Td><Button onClick={() => { setSelectedCompanyProfileId(companyProfile.id); open(); }}><FontAwesomeIcon icon={faTrash} /></Button></Table.Td>
 
         </Table.Tr>

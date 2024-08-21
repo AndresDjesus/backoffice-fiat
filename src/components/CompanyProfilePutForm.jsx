@@ -134,7 +134,7 @@ export function CompanyProfilePutForm() {
       <br />
       <br />
       
-      <Center><Button type="submit">Modificar Combustible </Button></Center>
+      <Center><Button type="submit">Modificar Perfil </Button></Center>
     </form>
     </Center>
     </Grid.Col>

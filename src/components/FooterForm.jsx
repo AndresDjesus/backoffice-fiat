@@ -1,33 +1,12 @@
 import { useForm } from "react-hook-form"
 import { postFooter } from "../services/Footer"
 import { Input, Button ,Center } from "@mantine/core"
-import * as yup from "yup"; 
-import { yupResolver } from '@hookform/resolvers/yup';
-
-const socialNetworkSchema = yup.object({
-    username: yup.string().required(),
-    url: yup.string().url().optional(), // Optional URL validation
-  });
 
   export function FooterForm() {
-    const { register, handleSubmit, formState: { errors } } = useForm({
-      resolver: yupResolver(
-        yup.object({
-          address: yup.string().required(),
-          email: yup.string().email().required(),
-          phone: yup.string().required(),
-          social_networks: yup.object().required().shape({
-            gmail: socialNetworkSchema,
-            instagram: socialNetworkSchema,
-            whatsapp: socialNetworkSchema.omit('url'), // Optional URL for whatsapp
-          }),
-        })
-      ),
-    });
+    const { register, handleSubmit, formState: { errors } } = useForm()
     const onSubmit = async (data) => {
         try {
           // ... código existente
-      
           const footerData = {
             address: data.address,
             email: data.email,
@@ -62,36 +41,49 @@ const socialNetworkSchema = yup.object({
     Dirección:
     <Input {...register("address")} />
     <br />
-    <br />
     Email:
     <Input {...register("email")} />
-    <br />
     <br />
     Telefono:
     <Input {...register("phone")} />
     <br />
-    <br />
     {/* ... other form fields ... */}
     <div>
       Redes Sociales:
-      {errors.social_networks && <p>Error: {errors.social_networks.message}</p>} {/* Display validation errors */}
+      <br />
       <div>
+        <br />
         Gmail:
-        <Input {...register("social_networks.gmail", socialNetworkSchema)} />
-        {errors.social_networks?.gmail && <p>Error: {errors.social_networks.gmail.message}</p>} {/* Display specific validation errors */}
+        <br />
+        Nombre de usuario de Gmail:
+        <Input {...register("social_networks.gmail")} />
+        <br />
+        URL de Gmail:
+        <Input {...register("social_networks.gmailUrl")} />
       </div>
       <div>
+        <br />
         Instagram:
-        <Input {...register("social_networks.instagram", socialNetworkSchema)} />
-        {errors.social_networks?.instagram && <p>Error: {errors.social_networks.instagram.message}</p>} {/* Display specific validation errors */}
+        <br />
+        Usuario de Instagram:
+        <Input {...register("social_networks.instagram",)} />
+        <br />
+        URL de Instagram:
+        <Input {...register("social_networks.instagramUrl")} />
       </div>
+      <br />
       <div>
         Whatsapp:
-        <Input {...register("social_networks.whatsapp", socialNetworkSchema.omit('url'))} />
-        {errors.social_networks?.whatsapp && <p>Error: {errors.social_networks.whatsapp.message}</p>} {/* Display specific validation errors */}
+        <br />
+        Número de Whatsapp:
+        <Input {...register("social_networks.whatsapp")} />
+        <br />
+        URL de Whatsapp:
+        <Input {...register("social_networks.whatsappUrl")} />
       </div>
       {/* ... other social media fields ... */}
     </div>
+    <br /> <br />
     {/* ... rest of form ... */}
     <Center><Button type="submit">Crear Pie de Pagina</Button></Center>
   </form>

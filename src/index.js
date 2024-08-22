@@ -45,6 +45,8 @@ import { BackofficeBlog } from './components/BackofficeBlog';
 import { ListBlog } from './components/ListaBlog';
 import { PutBlog } from './components/PutBlog';
 import { BackofficeFooter } from './components/BackofficeFooter';
+import { ListFooter } from './components/ListaFooter';
+import { PutFooter } from './components/PutFooter';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -197,7 +199,15 @@ const router = createBrowserRouter([
   {
     path: "/footer",
     element: <BackofficeFooter/>
-  }
+  },
+  {
+    path: "/listFooter",
+    element: <ListFooter/>
+  },
+  {
+    path: "/putFooter/:id",
+    element: <PutFooter/>
+  },
   
 
 ]);

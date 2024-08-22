@@ -160,6 +160,16 @@ export const Backoffice = () => {
         <NavLink label = "Lista de Posts del Blog" href="/listBlog" />
         <NavLink label = "Crear Post" href="/blog" />
     </NavLink>  
+    <NavLink 
+    href="#"
+    label = "Pie de Pagina"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Lista de los Pie de Pagina" href="/listFooter" />
+        <NavLink label = "Crear Pie de Pagina" href="/footer" />
+    </NavLink>  
     </>
         </Grid.Col>
     </Grid>

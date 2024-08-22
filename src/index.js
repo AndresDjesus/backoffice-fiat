@@ -44,6 +44,7 @@ import { PutCompany } from './components/PutCompany';
 import { BackofficeBlog } from './components/BackofficeBlog';
 import { ListBlog } from './components/ListaBlog';
 import { PutBlog } from './components/PutBlog';
+import { BackofficeFooter } from './components/BackofficeFooter';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -193,6 +194,10 @@ const router = createBrowserRouter([
     path: "/putBlog/:id",
     element: <PutBlog/>
   },  
+  {
+    path: "/footer",
+    element: <BackofficeFooter/>
+  }
   
 
 ]);

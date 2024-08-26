@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button, Center, Text } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button, Center, Text,  Image } from "@mantine/core";
 import { getInsides, deleteInside} from "../services/Inside"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -13,6 +13,11 @@ export const InsideList = () => {
 
     const [inside, setInside] = useState([]);
     const [selectedInsideId, setSelectedInsideId] = useState(null); 
+
+    const imgStyles = {
+      width: "40rem",
+      height: "20rem"
+    };
 
     useEffect(() => {
     const fetchInside = async () => {
@@ -43,6 +48,12 @@ export const InsideList = () => {
     const rows = inside.map((inside) => (
         <Table.Tr key={inside.id} >
           <Table.Td>{inside.id}</Table.Td>  
+          <Table.Td>
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${inside?.Images?.[0]?.base64}`} alt={inside.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${inside?.Images?.[1]?.base64}`} alt={inside.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${inside?.Images?.[2]?.base64}`} alt={inside.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${inside?.Images?.[3]?.base64}`} alt={inside.name} />
+      </Table.Td>
           <Table.Td>{inside.title}</Table.Td>
           <Table.Td>{inside.content}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putInside/${inside.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
@@ -82,6 +93,7 @@ export const InsideList = () => {
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
+            <Table.Th>Imagenes</Table.Th>
             <Table.Th>Titulo</Table.Th>
             <Table.Th>Contenido</Table.Th>
             <Table.Th>Modificar</Table.Th>

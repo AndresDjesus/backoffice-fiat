@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button, Center, Text } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button, Center, Text , Image } from "@mantine/core";
 import { getIndex, deleteIndex} from "../services/Index"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -13,6 +13,11 @@ export const IndexList = () => {
 
     const [index, setIndex] = useState([]);
     const [selectedIndexId, setSelectedIndexId] = useState(null); 
+
+    const imgStyles = {
+      width: "20rem",
+      height: "15rem"
+    };
 
     useEffect(() => {
     const fetchIndex = async () => {
@@ -43,6 +48,13 @@ export const IndexList = () => {
     const rows = index.map((index) => (
         <Table.Tr key={index.id} >
           <Table.Td>{index.id}</Table.Td>  
+          <Table.Td>
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[0]?.base64}`} alt={index.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[1]?.base64}`} alt={index.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[2]?.base64}`} alt={index.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[3]?.base64}`} alt={index.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[4]?.base64}`} alt={index.name} />
+           </Table.Td>
           <Table.Td>{index.title}</Table.Td>
           <Table.Td>{index.content}</Table.Td>
           <Table.Td>{index.buyVehicletitle}</Table.Td>
@@ -85,6 +97,7 @@ export const IndexList = () => {
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
+            <Table.Th>Imagenes</Table.Th>
             <Table.Th>Titulo</Table.Th>
             <Table.Th>Contenido</Table.Th>
             <Table.Th>Compra tu Vehiculo (Titulo)</Table.Th>

@@ -11,7 +11,7 @@ export const ListService = () => {
       
       <Box>
         <Grid>
-          <Grid.Col span={6}>
+          <Grid.Col span={4}>
             <Stack
               justify="center"
               align="flex-start"

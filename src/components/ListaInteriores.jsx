@@ -11,7 +11,7 @@ export const ListInside = () => {
       
       <Box>
         <Grid>
-          <Grid.Col span={6}>
+          <Grid.Col span={3}>
             <Stack
               justify="center"
               align="flex-start"

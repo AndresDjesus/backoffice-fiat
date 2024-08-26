@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button, Center, Text } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button, Center, Text , Image} from "@mantine/core";
 import { getBlog, deleteBlog} from "../services/Blog"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -27,6 +27,11 @@ export const BlogList = () => {
   const [opened, { open, close }] = useDisclosure(false);
   const isMobile = useMediaQuery('(max-width: 50em)');
 
+  const imgStyles = {
+    width: "40rem",
+    height: "20rem"
+  };
+
   const formattedDate = format(blog?.date ? new Date(blog?.date) : new Date(), 'dd/MM/yyyy');
 
   const handleDelete = async (blogId) => {
@@ -45,7 +50,11 @@ export const BlogList = () => {
 
     const rows = blog.map((blog) => (
         <Table.Tr key={blog.id} >
-          <Table.Td>{blog.id}</Table.Td>  
+          <Table.Td>{blog.id}</Table.Td>
+          <Table.Td>  
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${blog?.Images?.[0]?.base64}`} alt={blog.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${blog?.Images?.[1]?.base64}`} alt={blog.name} />
+          </Table.Td>
           <Table.Td>{blog.title}</Table.Td>
           <Table.Td>{blog.description}</Table.Td>
           <Table.Td>{blog.content}</Table.Td>
@@ -88,6 +97,7 @@ export const BlogList = () => {
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
+            <Table.Th>Imagen del Blog</Table.Th>
             <Table.Th>Titulo</Table.Th>
             <Table.Th>Descripción</Table.Th>
             <Table.Th>Contenido</Table.Th>

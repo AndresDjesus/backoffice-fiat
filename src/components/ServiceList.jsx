@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button, Center, Text } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button, Center, Text , Image} from "@mantine/core";
 import { getServices, deleteService} from "../services/Service"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -13,6 +13,11 @@ export const ServiceList = () => {
 
     const [service, setService] = useState([]);
     const [selectedServiceId, setSelectedServiceId] = useState(null); 
+
+    const imgStyles = {
+      width: "40rem",
+      height: "20rem"
+    };
 
     useEffect(() => {
     const fetchService = async () => {
@@ -43,6 +48,10 @@ export const ServiceList = () => {
     const rows = service.map((service) => (
         <Table.Tr key={service.id} >
           <Table.Td>{service.id}</Table.Td>  
+          <Table.Td>
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${service?.Images?.[0]?.base64}`} alt={service.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${service?.Images?.[1]?.base64}`} alt={service.name} />
+          </Table.Td>
           <Table.Td>{service.name}</Table.Td>
           <Table.Td>{service.description}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putService/${service.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
@@ -81,6 +90,7 @@ export const ServiceList = () => {
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
+            <Table.Th>Imagen</Table.Th>
             <Table.Th>Nombre</Table.Th>
             <Table.Th>Descripcion</Table.Th>
             <Table.Th>Modificar</Table.Th>

@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button, Center, Text } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button, Center, Text, Image } from "@mantine/core";
 import { getCompanys, deleteCompany} from "../services/Company"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -13,6 +13,11 @@ export const CompanyList = () => {
 
     const [company, setCompany] = useState([]);
     const [selectedCompanyId, setSelectedCompanyId] = useState(null); 
+
+    const imgStyles = {
+      width: "40rem",
+      height: "20rem"
+    };
 
     useEffect(() => {
     const fetchCompany = async () => {
@@ -43,6 +48,10 @@ export const CompanyList = () => {
     const rows = company.map((company) => (
         <Table.Tr key={company.id} >
           <Table.Td>{company.id}</Table.Td>  
+          <Table.Td>
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${company?.Images?.[0]?.base64}`} alt={company.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${company?.Images?.[1]?.base64}`} alt={company.name} />
+          </Table.Td>
           <Table.Td>{company.name}</Table.Td>
           <Table.Td>{company.description}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putCompany/${company.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
@@ -82,6 +91,7 @@ export const CompanyList = () => {
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
+            <Table.Th>Imagen de la Empresa</Table.Th>
             <Table.Th>Nombre de la Empresa</Table.Th>
             <Table.Th>Descripion de la Empresa</Table.Th>
             <Table.Th>Modificar</Table.Th>

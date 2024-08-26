@@ -11,7 +11,7 @@ export const ListVehicle = () => {
       
       <Box>
         <Grid>
-          <Grid.Col span={2}>
+          <Grid.Col span={3}>
             <Stack
               justify="center"
               align="flex-start"
@@ -21,7 +21,7 @@ export const ListVehicle = () => {
             </Group>
             </Stack>
           </Grid.Col>
-          <Grid.Col span={10}>
+          <Grid.Col span={7}>
             <br /><br /><br />
             <Center><Title>Lista de Vehiculos</Title></Center>
             <br /><br />

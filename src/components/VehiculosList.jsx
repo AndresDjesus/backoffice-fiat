@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button, Center, Text } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button, Center, Text, Image } from "@mantine/core";
 import { getVehicles, deleteVehicles} from "../services/Vehicles"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -15,6 +15,11 @@ export const VehiculosList = () => {
 
     const [vehicles , setVehicles] = useState([]);
     const [selectedVehicleId, setSelectedVehicleId] = useState(null); 
+
+    const imgStyles = {
+      width: "20rem",
+      height: "15rem"
+    };
 
     useEffect(() => {
     const fetchVehicles = async () => {
@@ -45,6 +50,13 @@ export const VehiculosList = () => {
     const rows = vehicles.map((vehicles) => (
         <Table.Tr key={vehicles.id}>
           <Table.Td>{vehicles.id}</Table.Td>  
+          <Table.Td>
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[0]?.base64}`} alt={vehicles.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[1]?.base64}`} alt={vehicles.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[2]?.base64}`} alt={vehicles.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[3]?.base64}`} alt={vehicles.name} />
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[4]?.base64}`} alt={vehicles.name} />
+           </Table.Td>
           <Table.Td>{vehicles.year}</Table.Td>
           <Table.Td>{vehicles.name}</Table.Td>
           <Table.Td>{vehicles.price}</Table.Td>
@@ -94,6 +106,7 @@ export const VehiculosList = () => {
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
+            <Table.Th>Imagenes</Table.Th>
             <Table.Th>Year</Table.Th>
             <Table.Th>Nombre</Table.Th>
             <Table.Th>Precio</Table.Th>

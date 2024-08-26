@@ -11,7 +11,7 @@ export const ListFooter = () => {
       
       <Box>
         <Grid>
-          <Grid.Col span={4}>
+          <Grid.Col span={3}>
             <Stack
               justify="center"
               align="flex-start"
@@ -21,7 +21,7 @@ export const ListFooter = () => {
             </Group>
             </Stack>
           </Grid.Col>
-          <Grid.Col span={8}>
+          <Grid.Col span={9}>
             <Stack
               justify="center"
               align='flex-start'

@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button, Center, Text } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button, Center, Text, Image} from "@mantine/core";
 import { getFooter, deleteFooter} from "../services/Footer"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -15,6 +15,11 @@ export const FooterList = () => {
 
     const [footer, setFooter] = useState([]);
     const [selectedFooterId, setSelectedFooterId] = useState(null); 
+
+    const imgStyles = {
+      width: "20rem",
+      height: "15rem"
+    };
 
     useEffect(() => {
     const fetchFooter = async () => {
@@ -45,6 +50,9 @@ export const FooterList = () => {
     const rows = footer.map((footer) => (
         <Table.Tr key={footer.id} >
           <Table.Td>{footer.id}</Table.Td>  
+          <Table.Td>
+          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${footer?.Images?.[0]?.base64}`} alt={footer.name} />
+           </Table.Td>
           <Table.Td>{footer.address}</Table.Td>
           <Table.Td>{footer.email}</Table.Td>
           <Table.Td>{footer.phone}</Table.Td>
@@ -90,6 +98,7 @@ export const FooterList = () => {
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
+            <Table.Th>Imagen</Table.Th>
             <Table.Th>Dirección</Table.Th>
             <Table.Th>Email</Table.Th>
             <Table.Th>Telefono</Table.Th>

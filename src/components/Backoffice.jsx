@@ -11,9 +11,9 @@ export const Backoffice = () => {
     function renderCards(){
     return(
     
-    <Box>
+    <Box bg={'black'}>
         <Grid>
-        <Grid.Col c={'blue'} span={{ span:15, md:15}}>
+        <Grid.Col  bg={'black'}  c={'blue'} span={{ span:15, md:15}}>
     <>
     <Image style={imgStyles} src={Logo}/>
     <NavLink 
@@ -170,6 +170,26 @@ export const Backoffice = () => {
         <NavLink label = "Lista de los Pie de Pagina" href="/listFooter" />
         <NavLink label = "Crear Pie de Pagina" href="/footer" />
     </NavLink>  
+    <NavLink 
+    href="#"
+    label = "Pagina Pricipal"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Lista de la Pagina" href="/listIndex" />
+        <NavLink label = "Crear Pagina Principal" href="/index" />
+    </NavLink>
+    <NavLink 
+    href="#"
+    label = "Ubicacion"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Lista de Ubicaciones" href="/listLocation" />
+        <NavLink label = "Crear Ubicacion" href="/location" />
+    </NavLink>    
     </>
         </Grid.Col>
     </Grid>

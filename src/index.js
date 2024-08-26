@@ -47,6 +47,12 @@ import { PutBlog } from './components/PutBlog';
 import { BackofficeFooter } from './components/BackofficeFooter';
 import { ListFooter } from './components/ListaFooter';
 import { PutFooter } from './components/PutFooter';
+import { BackofficeIndex } from './components/BackofficeIndex';
+import { ListIndex } from './components/ListaIndex';
+import {PutIndex} from './components/PutIndex';
+import { BackofficeLocation } from './components/BackofficeLocation';
+import { ListLocation } from './components/ListaLocation';
+import { PutLocation } from './components/PutLocation';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -208,6 +214,31 @@ const router = createBrowserRouter([
     path: "/putFooter/:id",
     element: <PutFooter/>
   },
+  {
+    path: "/index",
+    element: <BackofficeIndex/>
+  },
+  {
+    path: "/listIndex",
+    element: <ListIndex />
+  },
+  {
+    path: "/putIndex/:id",
+    element: <PutIndex />
+  },
+  {
+    path: "/location",
+    element: <BackofficeLocation/>
+  },
+  {
+    path: "/listLocation",
+    element: <ListLocation/>
+  },
+  {
+    path: "/putLocation/:id",
+    element: <PutLocation/>
+  },
+
   
 
 ]);

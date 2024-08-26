@@ -27,40 +27,6 @@ export const Backoffice = () => {
 
     <NavLink 
     href="#"
-    label = "Imagenes"
-    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
-    childrenOffset={28}
-    defaultOpened
-    >
-        <NavLink label = "Imagenes de Vehiculos" childrenOffset={28} href="#">
-        <NavLink label = "First child link" href="#" />
-        <NavLink label = "Second child link" href="#" />
-        <NavLink label  = "Third child link" href="#" />
-      </NavLink>
-      <NavLink label = "Imagenes de Servicos" childrenOffset={28} href="#">
-        <NavLink label = "First child link" href="#" />
-        <NavLink label = "Second child link" href="#" />
-        <NavLink label  = "Third child link" href="#" />
-      </NavLink>
-      <NavLink label = "Imagenes del Blog" childrenOffset={28} href="#">
-        <NavLink label = "First child link" href="#" />
-        <NavLink label = "Second child link" href="#" />
-        <NavLink label  = "Third child link" href="#" />
-      </NavLink>
-      <NavLink label = "Imagen de la Empresa" childrenOffset={28} href="#">
-        <NavLink label = "First child link" href="#" />
-        <NavLink label = "Second child link" href="#" />
-        <NavLink label  = "Third child link" href="#" />
-      </NavLink>
-      <NavLink label = "Imagen del Footer" childrenOffset={28} href="#">
-        <NavLink label = "First child link" href="#" />
-        <NavLink label = "Second child link" href="#" />
-        <NavLink label  = "Third child link" href="#" />
-      </NavLink>
-    </NavLink>    
-
-    <NavLink 
-    href="#"
     label = "Categorias"
     leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
     childrenOffset={28}
@@ -190,6 +156,16 @@ export const Backoffice = () => {
         <NavLink label = "Lista de Ubicaciones" href="/listLocation" />
         <NavLink label = "Crear Ubicacion" href="/location" />
     </NavLink>    
+    <NavLink 
+    href="#"
+    label = "Publicidad"
+    leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
+    childrenOffset={28}
+    defaultOpened
+    >
+        <NavLink label = "Lista de Publicidades" href="/listAdvertising" />
+        <NavLink label = "Crear Publicidad" href="/advertising" />
+    </NavLink>  
     </>
         </Grid.Col>
     </Grid>

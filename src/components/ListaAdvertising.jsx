@@ -3,15 +3,15 @@ import { TextInput, Button, Group, Text, Box, Grid, Center, Title,Image, Stack }
 import '@mantine/core/styles.css';
 import { Backoffice } from './Backoffice'; // Assuming this is your backoffice component
 import Logo from '../imagenes/logo-navbar.png';
-import {DesignList } from './DesignList';
+import {AdvertisingList } from './AdvertisingList';
 
-export const ListDesign = () => {
+export const ListAdvertising = () => {
   function renderCards() {
     return (
       
       <Box>
         <Grid>
-          <Grid.Col span={5}>
+          <Grid.Col span={8}>
             <Stack
               justify="center"
               align="flex-start"
@@ -21,15 +21,15 @@ export const ListDesign = () => {
             </Group>
             </Stack>
           </Grid.Col>
-          <Grid.Col span={7}>
+          <Grid.Col span={4}>
             <Stack
               justify="center"
               align='flex-start'
               >
             <br /><br /><br />
-            <Center><Title>Lista de Disenos de Vehiculos</Title></Center>
+            <Center><Title>Lista de las Publicidades</Title></Center>
             <br /><br /><br />
-            <Center ><DesignList /></Center>
+            <Center ><AdvertisingList /></Center>
             </Stack>
           </Grid.Col>
         </Grid>

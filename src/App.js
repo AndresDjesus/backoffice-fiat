@@ -19,6 +19,7 @@ import { BackofficeBlog } from "./components/BackofficeBlog";
 import { BackofficeFooter} from "./components/BackofficeFooter";
 import { BackofficeIndex } from "./components/BackofficeIndex";
 import { BackofficeLocation } from "./components/BackofficeLocation";
+import { BackofficeAdvertising } from "./components/BackofficeAdvertising";
 function App() {
   return (
     <Routes>
@@ -40,6 +41,7 @@ function App() {
       <Route path="/footer" element = {<BackofficeFooter/>} />
       <Route path = '/index' element = {<BackofficeIndex/>} />
       <Route path = '/location' element = {<BackofficeLocation/>} />
+      <Route path = '/advertising' element = {<BackofficeAdvertising/>} />
     </Routes>
   );
 }

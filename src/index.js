@@ -53,6 +53,9 @@ import {PutIndex} from './components/PutIndex';
 import { BackofficeLocation } from './components/BackofficeLocation';
 import { ListLocation } from './components/ListaLocation';
 import { PutLocation } from './components/PutLocation';
+import { BackofficeAdvertising } from './components/BackofficeAdvertising';
+import { ListAdvertising } from './components/ListaAdvertising';
+import { PutAdvertising } from './components/PutAdvertising';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -238,7 +241,18 @@ const router = createBrowserRouter([
     path: "/putLocation/:id",
     element: <PutLocation/>
   },
-
+  {
+    path: "/advertising",
+    element: <BackofficeAdvertising/>
+  },
+  {
+    path: "/listAdvertising",
+    element: <ListAdvertising/>
+  },
+  {
+    path: "/putAdvertising/:id",
+    element: <PutAdvertising/>
+  },
   
 
 ]);

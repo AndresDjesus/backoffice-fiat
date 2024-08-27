@@ -43,6 +43,7 @@ export  function CompanyForm() {
     setImages([]); // Clear images array
     setPrincipal(false); // Reset principal checkbox
     setValue('name', ''); // Clear name input value using setValue from react-hook-form
+    setValue('description', '');
   };
 
   const onSubmit = async (data) => {

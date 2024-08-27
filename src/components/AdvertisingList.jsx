@@ -48,12 +48,12 @@ export const AdvertisingList = () => {
     const rows = advertising.map((advertising) => (
         <Table.Tr key={advertising.id} >
           <Table.Td>{advertising.id}</Table.Td>  
-          <Table.Td>
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${advertising?.Images?.[0]?.base64}`} alt={advertising.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${advertising?.Images?.[1]?.base64}`} alt={advertising.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${advertising?.Images?.[2]?.base64}`} alt={advertising.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${advertising?.Images?.[3]?.base64}`} alt={advertising.name} />
-      </Table.Td>
+          <Table.Td>  {/* Celda para mostrar las imágenes */}
+          {advertising?.Images?.map((image, index) => (
+        <Image key={index} styles={imgStyles} radius={"xl"} 
+               src={`data:image/png;base64,${image.base64}`} alt={advertising.name} />
+          ))}
+          </Table.Td>
           <Table.Td>{advertising.name}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putAdvertising/${advertising.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
           <Table.Td><Button onClick={() => { setSelectedAdvertisingId(advertising.id); open(); }}><FontAwesomeIcon icon={faTrash} /></Button></Table.Td>

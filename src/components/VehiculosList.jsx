@@ -50,13 +50,12 @@ export const VehiculosList = () => {
     const rows = vehicles.map((vehicles) => (
         <Table.Tr key={vehicles.id}>
           <Table.Td>{vehicles.id}</Table.Td>  
-          <Table.Td>
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[0]?.base64}`} alt={vehicles.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[1]?.base64}`} alt={vehicles.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[2]?.base64}`} alt={vehicles.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[3]?.base64}`} alt={vehicles.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${vehicles?.Images?.[4]?.base64}`} alt={vehicles.name} />
-           </Table.Td>
+          <Table.Td>  {/* Celda para mostrar las imágenes */}
+          {vehicles?.Images?.map((image, index) => (
+          <Image key={index} styles={imgStyles} radius={"xl"} 
+               src={`data:image/png;base64,${image.base64}`} alt={vehicles.title} />
+          ))}
+          </Table.Td>
           <Table.Td>{vehicles.year}</Table.Td>
           <Table.Td>{vehicles.name}</Table.Td>
           <Table.Td>{vehicles.price}</Table.Td>

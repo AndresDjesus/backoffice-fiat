@@ -78,21 +78,21 @@ import { Input, Button ,Center } from "@mantine/core"
       const footerResponse = await postFooter(footerData);
 
       // Save design ID
-      setDesignId(designResponse.id);
+      setFooterId(footerResponse.id);
 
       // Send each image to the server
       for (const image of images) {
         const imageData = {
           base64: image,
           principal: principal,
-          design_id: designResponse.id
+          footer_id: footerResponse.id
         };
         await postImage(imageData);
       }
   
          // Combina las respuestas o realiza otras acciones según sea necesario
           console.log(data?.base64, 'RESULTADO DATA BASE 64');
-         console.log('Design creado:', designResponse);
+         console.log('Footer creado:', footerResponse);
          
       } catch (error) {
          console.error('Error:', error);
@@ -148,8 +148,29 @@ import { Input, Button ,Center } from "@mantine/core"
       {/* ... other social media fields ... */}
     </div>
     <br /> <br />
-    {/* ... rest of form ... */}
-    <Center><Button type="submit">Crear Pie de Pagina</Button></Center>
-  </form>
+    Imagen Principal:
+      <input type="checkbox" id="principal" name="principal" checked={principal} onChange={(e) => setPrincipal(e.target.checked)} />
+      <label htmlFor="principal">Imagen principal</label>
+      <br /><br />
+      Imagenes: (Puede seleccionar SOLO UNA IMAGEN para tu pie de pagina)
+      <br /><br />
+      <input type="file" accept="image/*" multiple onChange={handleImageChange} />
+      {/* Previews for selected images */}
+      {images.length > 0 && (
+      <div>
+        <h2>Imágenes Seleccionadas:</h2>
+        {images.map((image, index) => (
+          <div key={index}>
+            <img src={`data:image/png;base64,${image}`} alt={`Imagen ${index + 1}`} width={200} height={100} />
+          </div>
+        ))}
+      </div>
+      )}
+      <br />
+      <br />
+      <Center><Button type="submit">Crear Pie de Página</Button></Center>
+      <br />
+      <Center><Button variant="outline" onClick={handleClearForm}>Limpiar Formulario</Button> </Center>
+    </form>
   )
 }

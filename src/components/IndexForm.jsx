@@ -1,3 +1,4 @@
+import React ,{ useEffect, useState } from 'react';
 import { useForm } from "react-hook-form"
 import { Input, Button } from "@mantine/core"
 import { postIndex } from "../services/Index"

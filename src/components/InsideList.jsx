@@ -48,12 +48,12 @@ export const InsideList = () => {
     const rows = inside.map((inside) => (
         <Table.Tr key={inside.id} >
           <Table.Td>{inside.id}</Table.Td>  
-          <Table.Td>
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${inside?.Images?.[0]?.base64}`} alt={inside.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${inside?.Images?.[1]?.base64}`} alt={inside.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${inside?.Images?.[2]?.base64}`} alt={inside.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${inside?.Images?.[3]?.base64}`} alt={inside.name} />
-      </Table.Td>
+          <Table.Td>  {/* Celda para mostrar las imágenes */}
+          {inside?.Images?.map((image, index) => (
+          <Image key={index} styles={imgStyles} radius={"xl"} 
+               src={`data:image/png;base64,${image.base64}`} alt={inside.title} />
+          ))}
+          </Table.Td>
           <Table.Td>{inside.title}</Table.Td>
           <Table.Td>{inside.content}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putInside/${inside.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>

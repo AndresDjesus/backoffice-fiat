@@ -48,13 +48,12 @@ export const IndexList = () => {
     const rows = index.map((index) => (
         <Table.Tr key={index.id} >
           <Table.Td>{index.id}</Table.Td>  
-          <Table.Td>
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[0]?.base64}`} alt={index.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[1]?.base64}`} alt={index.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[2]?.base64}`} alt={index.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[3]?.base64}`} alt={index.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${index?.Images?.[4]?.base64}`} alt={index.name} />
-           </Table.Td>
+          <Table.Td>  {/* Celda para mostrar las imágenes */}
+          {index?.Images?.map((image, index) => (
+          <Image key={index} styles={imgStyles} radius={"xl"} 
+               src={`data:image/png;base64,${image.base64}`} alt={index.title} />
+          ))}
+          </Table.Td>
           <Table.Td>{index.title}</Table.Td>
           <Table.Td>{index.content}</Table.Td>
           <Table.Td>{index.buyVehicletitle}</Table.Td>

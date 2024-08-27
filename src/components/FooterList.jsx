@@ -50,9 +50,12 @@ export const FooterList = () => {
     const rows = footer.map((footer) => (
         <Table.Tr key={footer.id} >
           <Table.Td>{footer.id}</Table.Td>  
-          <Table.Td>
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${footer?.Images?.[0]?.base64}`} alt={footer.name} />
-           </Table.Td>
+          <Table.Td>  {/* Celda para mostrar las imágenes */}
+          {footer?.Images?.map((image, index) => (
+          <Image key={index} styles={imgStyles} radius={"xl"} 
+               src={`data:image/png;base64,${image.base64}`} alt={footer.title} />
+          ))}
+          </Table.Td>
           <Table.Td>{footer.address}</Table.Td>
           <Table.Td>{footer.email}</Table.Td>
           <Table.Td>{footer.phone}</Table.Td>

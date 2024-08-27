@@ -48,9 +48,11 @@ export const CompanyList = () => {
     const rows = company.map((company) => (
         <Table.Tr key={company.id} >
           <Table.Td>{company.id}</Table.Td>  
-          <Table.Td>
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${company?.Images?.[0]?.base64}`} alt={company.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${company?.Images?.[1]?.base64}`} alt={company.name} />
+          <Table.Td>  {/* Celda para mostrar las imágenes */}
+          {company?.Images?.map((image, index) => (
+        <Image key={index} styles={imgStyles} radius={"xl"} 
+               src={`data:image/png;base64,${image.base64}`} alt={company.name} />
+          ))}
           </Table.Td>
           <Table.Td>{company.name}</Table.Td>
           <Table.Td>{company.description}</Table.Td>

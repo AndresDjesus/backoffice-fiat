@@ -51,9 +51,11 @@ export const BlogList = () => {
     const rows = blog.map((blog) => (
         <Table.Tr key={blog.id} >
           <Table.Td>{blog.id}</Table.Td>
-          <Table.Td>  
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${blog?.Images?.[0]?.base64}`} alt={blog.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${blog?.Images?.[1]?.base64}`} alt={blog.name} />
+          <Table.Td>  {/* Celda para mostrar las imágenes */}
+          {blog?.Images?.map((image, index) => (
+          <Image key={index} styles={imgStyles} radius={"xl"} 
+               src={`data:image/png;base64,${image.base64}`} alt={blog.title} />
+          ))}
           </Table.Td>
           <Table.Td>{blog.title}</Table.Td>
           <Table.Td>{blog.description}</Table.Td>
@@ -97,7 +99,7 @@ export const BlogList = () => {
         <Table.Thead>
             <Table.Tr>
             <Table.Th>ID</Table.Th>
-            <Table.Th>Imagen del Blog</Table.Th>
+            <Table.Th>Imagen del Post</Table.Th>
             <Table.Th>Titulo</Table.Th>
             <Table.Th>Descripción</Table.Th>
             <Table.Th>Contenido</Table.Th>

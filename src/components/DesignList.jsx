@@ -48,12 +48,12 @@ export const DesignList = () => {
     const rows = design.map((design) => (
         <Table.Tr key={design.id} >
           <Table.Td>{design.id}</Table.Td>  
-          <Table.Td>
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${design?.Images?.[0]?.base64}`} alt={design.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${design?.Images?.[1]?.base64}`} alt={design.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${design?.Images?.[2]?.base64}`} alt={design.name} />
-          <Image styles={imgStyles} radius={"xl"} src={`data:image/png;base64,${design?.Images?.[3]?.base64}`} alt={design.name} />
-           </Table.Td>
+          <Table.Td>  {/* Celda para mostrar las imágenes */}
+          {design?.Images?.map((image, index) => (
+          <Image key={index} styles={imgStyles} radius={"xl"} 
+               src={`data:image/png;base64,${image.base64}`} alt={design.title} />
+          ))}
+          </Table.Td>
           <Table.Td>{design.title}</Table.Td>
           <Table.Td>{design.content}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putDesign/${design.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>

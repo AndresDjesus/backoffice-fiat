@@ -18,6 +18,7 @@ export const FormPutAdvertising = () => {
   const [opened, setOpened,] = useState(false);
   const [openedUploaded, setOpenedUploaded] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
+  const [ images , setImages] = useState([]);
 
   useEffect(() => {
     const fetchAdvertising = async () => {
@@ -97,14 +98,20 @@ export const FormPutAdvertising = () => {
                     label="Seleccionar más imágenes"
                     multiple
                     accept="image/*"
-                    onChange={(files) => {
-                      files?.map((file) => {
-                        const fileReader = new FileReader();
-                        fileReader.readAsDataURL(file);
-                        fileReader.onload = (e) => {
-                          setUploadedImages(...uploadedImages, e.target.result.split(',')[1]); // Extract base64 data
-                        };
-                      }, []);
+                    onChange={async (files) => {
+                      const arr = files?.map(async (file) => {
+                        const p = new Promise((resolve, reject) => {
+                          const fileReader = new FileReader();
+                          fileReader.onload = (e) => {
+                            resolve(e.target.result.split(',')[1]);
+                          }
+                          fileReader.readAsDataURL(file);
+                        });
+                        return p;
+                      }, []);        
+                      
+                      const vls = await Promise.allSettled(arr);
+                      setUploadedImages(vls?.map((v) => v?.value, []));
                     }}
                   />
                 )}
@@ -145,10 +152,25 @@ export const FormPutAdvertising = () => {
                 </Modal.Body>
               </Modal>
               <Modal
-                opened={openedUploaded}
-                size={'100%'}
+               opened={openedUploaded}
+               onClose={}
+                size={'60%'}
               >
-                Hola soy la otra
+                <Modal.Header> Imagenes Cargadas </Modal.Header>
+                <Modal.Body>
+                  <Group>
+                  {uploadedImages && uploadedImages.map((value) => (
+                    <Stack >
+                    <Image
+                          w={200}
+                          src={`data:image/png;base64,${value}`}
+                          alt="Imagen de ejemplo"
+                          style={{ marginLeft: 10 }} // Add a margin for better layout
+                        />
+                    </Stack>
+                    ))}
+                  </Group>
+                </Modal.Body>
               </Modal>
             </Group>
           </Stack>

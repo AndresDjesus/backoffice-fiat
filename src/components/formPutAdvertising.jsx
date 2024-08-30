@@ -2,10 +2,10 @@ import { Box, Grid, Input, Stack, Group, Button, Image, Checkbox, FileInput, Tit
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-
-import { getAdvertisingById } from '../services/Advertising';
+import { getAdvertisingById , putAdvertising} from '../services/Advertising';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
+import { putImage } from "../services/Images";
 
 export const FormPutAdvertising = () => {
 
@@ -13,12 +13,14 @@ export const FormPutAdvertising = () => {
   const { id } = useParams();
 
   const [advertising, setAdvertising] = useState([]);
-  const [selectedImages, setSelectedImages] = useState([]);
-  const [uploadedImages, setUploadedImages] = useState([]);
+  const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
+  const [selectedImageData, setSelectedImageData] = useState([]); // Data for selected images
+  const [uploadedImages, setUploadedImages] = useState([]);  // Base64 of uploaded images
   const [opened, setOpened,] = useState(false);
   const [openedUploaded, setOpenedUploaded] = useState(false);
+  const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
-  const [ images , setImages] = useState([]);
+
 
   useEffect(() => {
     const fetchAdvertising = async () => {
@@ -32,18 +34,28 @@ export const FormPutAdvertising = () => {
 
     fetchAdvertising();
   }, [id]);
-
-  const handleImageSelection = (imageId) => {
-    const newSelectedImages = [...selectedImages]; // Create a copy to avoid mutation
+ const handleImageSelection = (imageId) => {
+    const newSelectedImages = [...selectedImages];
     if (newSelectedImages.includes(imageId)) {
-      // Remove from selection if already checked
       const indexToRemove = newSelectedImages.indexOf(imageId);
       newSelectedImages.splice(indexToRemove, 1);
     } else {
-      // Add to selection if not checked
       newSelectedImages.push(imageId);
     }
     setSelectedImages(newSelectedImages);
+
+    // Fetch image data for the newly selected images only
+    fetchSelectedImageData(newSelectedImages.filter(id => !selectedImageData.some(data => data.id === id)));
+  };
+
+  const fetchSelectedImageData = async (selectedImageIds) => {
+    const imagePromises = selectedImageIds.map(async (imageId) => {
+      const imageData = await getImageById(imageId);
+      return imageData;
+    });
+
+    const imageData = await Promise.all(imagePromises);
+    setSelectedImageData([...selectedImageData, ...imageData]); // Append new data to existing
   };
 
   const handleCancelModal = () => {
@@ -52,16 +64,59 @@ export const FormPutAdvertising = () => {
     setOpened(false);
   };
 
+  const handleOpenImageEditModal = () => {
+    // Implement logic to prepare data needed for editing (e.g., pre-fill editing tools)
+    setOpenedImageEditModal(true);
+  };
+
+  const handleCloseImageEditModal = () => {
+    setOpenedImageEditModal(false);
+  };
+
+ 
+
   const handleConfirm = () => {
     if (selectedImages.length > 0) {
       setShowAdditionalInput(true);
       setOpened(false);
-      // Aquí puedes realizar la lógica para enviar las imágenes seleccionadas al servidor o realizar otras acciones
+  
+      // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
+      const updatedAdvertisingData = {
+        name: form.getValues('name'),
+        // ... otros campos que quieras actualizar
+      };
+  
+      // Array para almacenar las promesas de las peticiones PUT
+      const putPromises = [];
+  
+      // Loop through selected images
+      selectedImages.forEach((imageId, index) => {
+        const base64 = uploadedImages[index];
+  
+        // Crear la solicitud PUT para actualizar la imagen
+        const putImagePromise = putImage({ base64, principal: true }, imageId);
+        putPromises.push(putImagePromise);
+      });
+  
+      // Crear la solicitud PUT para actualizar la publicidad
+      const putAdvertisingPromise = putAdvertising( updatedAdvertisingData , id);
+      putPromises.push(putAdvertisingPromise);
+  
+      // Ejecutar todas las promesas en paralelo
+      Promise.all(putPromises)
+        .then(() => {
+          console.log('Imágenes y publicidad modificadas exitosamente');
+        })
+        .catch((error) => {
+          console.error('Error al modificar las imágenes o la publicidad:', error);
+        });
     } else {
       // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
     }
   };
-
+    
+  console.log('Selected image IDs:', selectedImages);
+  console.log('Uploaded image base64:', uploadedImages);
   console.log(uploadedImages);
 
   return (
@@ -125,7 +180,19 @@ export const FormPutAdvertising = () => {
                   >
                     {'Ver imagenes cargadas'}
                   </Button>
+                    
                 )}
+                {uploadedImages.length > 0 && (
+                  <Button
+                    onClick={() => {
+                      handleOpenImageEditModal();
+                    }}
+                  >
+                    {'Imagenes Seleccionadas para editar '}
+                  </Button>
+                )}
+                <Button onClick={() => handleConfirm()}>Modificar Publicidad</Button>
+
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>
                 <Modal.Header>Galería de Imágenes</Modal.Header>
@@ -153,7 +220,7 @@ export const FormPutAdvertising = () => {
               </Modal>
               <Modal
                opened={openedUploaded}
-               onClose={}
+                onClose={() => setOpenedUploaded(false)}
                 size={'60%'}
               >
                 <Modal.Header> Imagenes Cargadas </Modal.Header>
@@ -172,6 +239,24 @@ export const FormPutAdvertising = () => {
                   </Group>
                 </Modal.Body>
               </Modal>
+              <Modal opened={openedImageEditModal} onClose={handleCloseImageEditModal} size={'60%'}>
+               <Modal.Header>Imágenes Seleccionadas para Editar</Modal.Header>
+               <Modal.Body>
+              <Group>
+              {selectedImageData.map((imageData, index) => (
+              <Stack key={index}>
+                <Image
+                  w={200}
+                  src={`data:image/png;base64,${imageData.base64}`}
+                  alt="Imagen de ejemplo"
+                  style={{ marginLeft: 10 }}
+                />
+                
+              </Stack>
+            ))}
+            </Group>
+            </Modal.Body>
+            </Modal>
             </Group>
           </Stack>
         </Grid.Col>

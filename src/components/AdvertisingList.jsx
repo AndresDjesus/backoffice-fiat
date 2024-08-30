@@ -1,4 +1,4 @@
-import { Title, Box, Grid, Stack, Table, Button, Center, Text, Image } from "@mantine/core";
+import { Title, Box, Grid, Stack, Table, Button, Center, Text, Image, Modal } from "@mantine/core";
 import { getAdvertising, deleteAdvertising } from "../services/Advertising"; // Import deleteVehicle function
 import { useEffect, useState } from "react";
 import React from 'react';
@@ -7,12 +7,15 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';  
 import { useNavigate } from "react-router-dom";
 import { useDisclosure, useMediaQuery } from '@mantine/hooks';
-import { Modal } from '@mantine/core';
+
+
 
 export const AdvertisingList = () => {
 
+   
     const [advertising, setAdvertising] = useState([]);
     const [selectedAdvertisingId, setSelectedAdvertisingId] = useState(null); 
+
 
     const imgStyles = {
       width: "40rem",

@@ -1,90 +1,124 @@
 import { useNavigate } from "react-router-dom";
-import { Box, Grid, TextInput, Button , Text, Title, Center, Image , Input, Select} from '@mantine/core';
-
+import { Box, Grid, TextInput, Button, Text, Title, Center, Image, Input, Select } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { useForm , reset} from 'react-hook-form';
-import { getAdvertisingById } from '../services/Advertising';
-import { putAdvertising} from '../services/Advertising';
+import { useForm, reset } from 'react-hook-form';
+import { getAdvertisingById, putAdvertising } from '../services/Advertising';
+import { putImage } from '../services/Images';
 import { useParams } from 'react-router-dom';
-import { format } from 'date-fns';
 
-// Nuevo componente para el formulario
+// Componente para el formulario de edición de publicidad
 export function AdvertisingPutForm() {
+    const { id } = useParams();
+    const { register, setValue, reset } = useForm();
+    // No need for useNavigate here since we're not redirecting
 
-  const { id } = useParams();
-  const { register, handleSubmit, setValue, reset } = useForm();
+    const [advertisingData, setAdvertisingData] = useState(null);
+    const [previewImageUrls, setPreviewImageUrls] = useState([]);
 
- 
+    useEffect(() => {
+        const fetchAdvertising = async () => {
+            try {
+                const response = await getAdvertisingById(id);
+                setAdvertisingData(response);
+                setPreviewImageUrls(response.Images.map((image) => image.base64));
+            } catch (error) {
+                console.error('Error al obtener la publicidad:', error);
+                // Maneja el error de forma adecuada, por ejemplo, mostrando un mensaje de error al usuario
+            }
+        };
 
-  const onSubmit = async (data) => {
-   
-    try {
-      // Construye el objeto con los datos a enviar
-      const advertisingData = {
-        name: data?.name,
-      };
-      const response = await putAdvertising(advertisingData, id);
-      console.log(advertisingData);
-      console.log('Publicidad modificado:', response);
-      // Manejar la respuesta del servidor
-    } catch (error) {
-      console.error('Error modificando el post:', error);
-      // Manejar el error
-    }
-  };
-  
-  const [advertisingData, setAdvertisingData] = useState(null);
+        fetchAdvertising();
+    }, []);
 
-  useEffect(() => {
-    
+    const handleImageChange = (event, index) => {
+        const file = event.target.files[0];
+        const reader = new FileReader();
 
-    const fetchAdvertising = async () => {
+        reader.onload = (e) => {
+            setPreviewImageUrls((prevImageUrls) => {
+                const newImageUrls = [...prevImageUrls];
+                newImageUrls[index] = e.target.result;
+                return newImageUrls;
+            });
+        };
+        reader.readAsDataURL(file);
+    };
+
+    const handleSubmit = async (data, event) => {
       try {
-        const response = await getAdvertisingById(id);
-        console.log('Response:', response);
-        setAdvertisingData(response); // Suponiendo que la respuesta tiene un campo 'data'
+        // Update main advertising data
+        const response = await putAdvertising(data, id);
+        console.log(response);
+        // // Check for successful response (e.g., status code 200)
+        // if (response.status === 200) {
+        //   console.log('Publicidad modificada con éxito:', response);
+  
+        //   // Update images
+        //   advertisingData.Images.forEach(async (image, index) => {
+        //     const formData = new FormData();
+        //     formData.append('image', previewImageUrls[index]);
+        //     await putImage(formData, image.id);
+        //   });
+        // } else {
+        //   console.error('Error al actualizar la publicidad:', response);
+        //   // Handle the specific error from the server response
+        // }
       } catch (error) {
-        console.error('Error fetching advertising:', error);
-        // Mostrar mensaje de error al usuario
+        console.error('Error al modificar la publicidad:', error);
+        // Handle general errors like network issues
       }
     };
 
-    fetchAdvertising();
+    return (
+        <Box>
+            <Grid>
+                <Grid.Col c={'blue'} span={{ span: 12, md: 12 }}>
+                    <Center>
+                        <form onSubmit={handleSubmit}>
+                            Nombre de la Publicidad:
+                            <br />
+                            <Input
+                                label="Nombre de la publicidad"
+                                
+                                {...register("name")}
+                                defaultValue={advertisingData?.name}
+                            />
+                            {/* Otros campos del formulario */}
+                            <br />
+                            <div>
+                                {advertisingData?.Images?.map((image, index) => (
+                                    <div key={index}>
+                                        <Image
+                                            src={`data:image/jpeg;base64,${image?.base64}`}
+                                            alt={`Imagen ${index + 1}`}
+                                            width={300}
+                                            height={200}
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                        <input
+                                            type="file"
+                                            onChange={(e) => handleImageChange(e, index)}
+                                        />
+                                        <br />
+                                        <Image
+                                            src={previewImageUrls[index]}
+                                            alt="Vista previa"
+                                            width={300}
+                                            height={200}
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                ))}
+                            </div>
 
-  }, []);
-
-   useEffect(() => {
-     if (advertisingData) {
-      
-        setValue("name", advertisingData?.name);
-        
-       reset({
-         name: advertisingData?.name,
-       });
-     }
-  }, [advertisingData]); 
-
-
-
-  console.log(advertisingData, 'advertisingData');
-
-
-  return (
-    <Box>
-        <Grid>
-            <Grid.Col c={'blue'} span={{ span:12, md:12}}>
-    <Center>
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* Campos del formulario */}
-      Nombre:
-      <Input {...register("name")} defaultValue={advertisingData?.name}/>
-      <br />
-      <br />
-      <Center><Button type="submit">Modificar Publicidad</Button></Center>
-    </form>
-    </Center>
-    </Grid.Col>
-    </Grid>
-</Box>
-  );
+                            <Center><Button type="submit">Guardar cambios</Button> </Center>
+                        </form>
+                    </Center>
+                </Grid.Col>
+            </Grid>
+        </Box>
+    );
 }
+
+
+

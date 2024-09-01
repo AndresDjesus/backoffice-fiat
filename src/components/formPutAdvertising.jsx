@@ -20,6 +20,7 @@ export const FormPutAdvertising = () => {
   const [openedUploaded, setOpenedUploaded] = useState(false);
   const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false); 
 
 
   useEffect(() => {
@@ -106,6 +107,7 @@ export const FormPutAdvertising = () => {
       Promise.all(putPromises)
         .then(() => {
           console.log('Imágenes y publicidad modificadas exitosamente');
+          setSuccessModalOpen(true);
         })
         .catch((error) => {
           console.error('Error al modificar las imágenes o la publicidad:', error);
@@ -256,6 +258,14 @@ export const FormPutAdvertising = () => {
             ))}
             </Group>
             </Modal.Body>
+            </Modal>
+            <Modal
+              opened={successModalOpen}
+              onClose={() => setSuccessModalOpen(false)}
+              title="¡Éxito!"
+              >
+             <p>Su publicidad se ha modificado con éxito.</p>
+            <Button onClick={() => setSuccessModalOpen(false)}>Aceptar</Button>
             </Modal>
             </Group>
           </Stack>

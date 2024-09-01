@@ -15,6 +15,7 @@ export const FooterList = () => {
 
     const [footer, setFooter] = useState([]);
     const [selectedFooterId, setSelectedFooterId] = useState(null); 
+    const [selectedFooter , setSelectedFooter] = useState(null);
 
     const imgStyles = {
       width: "20rem",
@@ -51,10 +52,7 @@ export const FooterList = () => {
         <Table.Tr key={footer.id} >
           <Table.Td>{footer.id}</Table.Td>  
           <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {footer?.Images?.map((image, index) => (
-          <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={footer.title} />
-          ))}
+          <Button onClick={() => setSelectedFooter(footer)}>Ver Imagen</Button>
           </Table.Td>
           <Table.Td>{footer.address}</Table.Td>
           <Table.Td>{footer.email}</Table.Td>
@@ -96,6 +94,26 @@ export const FooterList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedFooter !== null} onClose={(close) => setSelectedFooterId(null)}>
+          <Center>
+            {selectedFooter?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedFooter.title}
+                    style={{
+                      objectFit: 'contain', 
+                      maxWidth: '100%', 
+                      maxHeight: '100%' 
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedFooter(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>

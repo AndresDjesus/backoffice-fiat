@@ -13,6 +13,7 @@ export const IndexList = () => {
 
     const [index, setIndex] = useState([]);
     const [selectedIndexId, setSelectedIndexId] = useState(null); 
+    const [selectedIndex , setSelectedIndex] = useState(null);
 
     const imgStyles = {
       width: "20rem",
@@ -49,10 +50,7 @@ export const IndexList = () => {
         <Table.Tr key={index.id} >
           <Table.Td>{index.id}</Table.Td>  
           <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {index?.Images?.map((image, index) => (
-          <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={index.title} />
-          ))}
+          <Button onClick={() => setSelectedIndex(index)}>Ver Imagenes</Button>
           </Table.Td>
           <Table.Td>{index.title}</Table.Td>
           <Table.Td>{index.content}</Table.Td>
@@ -91,6 +89,26 @@ export const IndexList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedIndex !== null} onClose={(close) => setSelectedIndexId(null)}>
+          <Center>
+            {selectedIndex?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedIndex.title}
+                    style={{
+                      objectFit: 'contain', // Ajusta la imagen al contenedor sin distorsionar
+                      maxWidth: '100%', // Asegura que la imagen no sobrepase el contenedor
+                      maxHeight: '100%' // Asegura que la imagen no sobrepase el contenedor
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedIndex(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>

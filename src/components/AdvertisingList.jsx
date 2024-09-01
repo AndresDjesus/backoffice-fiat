@@ -15,6 +15,7 @@ export const AdvertisingList = () => {
    
     const [advertising, setAdvertising] = useState([]);
     const [selectedAdvertisingId, setSelectedAdvertisingId] = useState(null); 
+    const [selectedAdvertising , setSelectedAdvertising] = useState(null);
 
 
     const imgStyles = {
@@ -52,10 +53,7 @@ export const AdvertisingList = () => {
         <Table.Tr key={advertising.id} >
           <Table.Td>{advertising.id}</Table.Td>  
           <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {advertising?.Images?.map((image, index) => (
-        <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={advertising.name} />
-          ))}
+          <Button onClick={() => setSelectedAdvertising(advertising)}>Ver Imagenes</Button>
           </Table.Td>
           <Table.Td>{advertising.name}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putAdvertising/${advertising.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
@@ -90,6 +88,26 @@ export const AdvertisingList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedAdvertising !== null} onClose={(close) => setSelectedAdvertisingId(null)}>
+          <Center>
+            {selectedAdvertising?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedAdvertising.title}
+                    style={{
+                      objectFit: 'contain', 
+                      maxWidth: '100%', 
+                      maxHeight: '100%' 
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedAdvertising(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>

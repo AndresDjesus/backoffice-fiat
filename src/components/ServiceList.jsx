@@ -13,6 +13,7 @@ export const ServiceList = () => {
 
     const [service, setService] = useState([]);
     const [selectedServiceId, setSelectedServiceId] = useState(null); 
+    const [selectedService, setSelectedService] = useState(null);
 
     const imgStyles = {
       width: "40rem",
@@ -48,12 +49,9 @@ export const ServiceList = () => {
     const rows = service.map((service) => (
         <Table.Tr key={service.id} >
           <Table.Td>{service.id}</Table.Td>  
-          <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {service?.Images?.map((image, index) => (
-          <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={service.name} />
-          ))}
-          </Table.Td>
+          <Table.Td>
+          <Button onClick={() => setSelectedService(service)}>Ver Imagenes</Button>
+         </Table.Td>
           <Table.Td>{service.name}</Table.Td>
           <Table.Td>{service.description}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putService/${service.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
@@ -87,6 +85,27 @@ export const ServiceList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedService !== null} onClose={(close) => setSelectedServiceId(null)}>
+          <Center>
+            {selectedService?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    radius={"xl"}
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedService.name}
+                    style={{
+                      objectFit: 'contain', // Ajusta la imagen al contenedor sin distorsionar
+                      maxWidth: '100%', // Asegura que la imagen no sobrepase el contenedor
+                      maxHeight: '100%' // Asegura que la imagen no sobrepase el contenedor
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedService(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>

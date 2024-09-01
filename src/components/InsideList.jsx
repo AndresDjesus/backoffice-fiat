@@ -13,6 +13,7 @@ export const InsideList = () => {
 
     const [inside, setInside] = useState([]);
     const [selectedInsideId, setSelectedInsideId] = useState(null); 
+    const [selectedInside, setSelectedInside] = useState(null);
 
     const imgStyles = {
       width: "40rem",
@@ -48,12 +49,9 @@ export const InsideList = () => {
     const rows = inside.map((inside) => (
         <Table.Tr key={inside.id} >
           <Table.Td>{inside.id}</Table.Td>  
-          <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {inside?.Images?.map((image, index) => (
-          <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={inside.title} />
-          ))}
-          </Table.Td>
+          <Table.Td>
+          <Button onClick={() => setSelectedInside(inside)}>Ver Imagenes</Button>
+         </Table.Td>
           <Table.Td>{inside.title}</Table.Td>
           <Table.Td>{inside.content}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putInside/${inside.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
@@ -88,6 +86,27 @@ export const InsideList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedInside !== null} onClose={(close) => setSelectedInsideId(null)}>
+          <Center>
+            {selectedInside?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    radius={"xl"}
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedInside.name}
+                    style={{
+                      objectFit: 'contain', // Ajusta la imagen al contenedor sin distorsionar
+                      maxWidth: '100%', // Asegura que la imagen no sobrepase el contenedor
+                      maxHeight: '100%' // Asegura que la imagen no sobrepase el contenedor
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedInside(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>

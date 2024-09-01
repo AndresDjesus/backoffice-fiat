@@ -13,6 +13,7 @@ export const DesignList = () => {
 
     const [design, setDesign] = useState([]);
     const [selectedDesignId, setSelectedDesignId] = useState(null); 
+    const [selectedDesign, setSelectedDesign] = useState(null);
 
     const imgStyles = {
       width: "40rem",
@@ -48,12 +49,9 @@ export const DesignList = () => {
     const rows = design.map((design) => (
         <Table.Tr key={design.id} >
           <Table.Td>{design.id}</Table.Td>  
-          <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {design?.Images?.map((image, index) => (
-          <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={design.title} />
-          ))}
-          </Table.Td>
+          <Table.Td>
+          <Button onClick={() => setSelectedDesign(design)}>Ver Imagenes</Button>
+         </Table.Td>
           <Table.Td>{design.title}</Table.Td>
           <Table.Td>{design.content}</Table.Td>
           <Table.Td><Button onClick={() => navigate(`/putDesign/${design.id}`)}><FontAwesomeIcon icon={faPencilAlt} /></Button></Table.Td>
@@ -88,6 +86,27 @@ export const DesignList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedDesign !== null} onClose={(close) => setSelectedDesignId(null)}>
+          <Center>
+            {selectedDesign?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    radius={"xl"}
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedDesign.name}
+                    style={{
+                      objectFit: 'contain', // Ajusta la imagen al contenedor sin distorsionar
+                      maxWidth: '100%', // Asegura que la imagen no sobrepase el contenedor
+                      maxHeight: '100%' // Asegura que la imagen no sobrepase el contenedor
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedDesign(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>

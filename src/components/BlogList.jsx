@@ -14,6 +14,7 @@ export const BlogList = () => {
 
     const [blog, setBlog] = useState([]);
     const [selectedBlogId, setSelectedBlogId] = useState(null); 
+    const [selectedBlog, setSelectedBlog] = useState(null);
 
     useEffect(() => {
     const fetchBlog = async () => {
@@ -52,10 +53,7 @@ export const BlogList = () => {
         <Table.Tr key={blog.id} >
           <Table.Td>{blog.id}</Table.Td>
           <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {blog?.Images?.map((image, index) => (
-          <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={blog.title} />
-          ))}
+          <Button onClick={() => setSelectedBlog(blog)}>Ver Imagen</Button>
           </Table.Td>
           <Table.Td>{blog.title}</Table.Td>
           <Table.Td>{blog.description}</Table.Td>
@@ -94,6 +92,27 @@ export const BlogList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedBlog !== null} onClose={(close) => setSelectedBlogId(null)}>
+          <Center>
+            {selectedBlog?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    radius={"xl"}
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedBlog.name}
+                    style={{
+                      objectFit: 'contain', // Ajusta la imagen al contenedor sin distorsionar
+                      maxWidth: '100%', // Asegura que la imagen no sobrepase el contenedor
+                      maxHeight: '100%' // Asegura que la imagen no sobrepase el contenedor
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedBlog(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>

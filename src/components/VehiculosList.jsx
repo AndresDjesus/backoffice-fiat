@@ -15,10 +15,12 @@ export const VehiculosList = () => {
 
     const [vehicles , setVehicles] = useState([]);
     const [selectedVehicleId, setSelectedVehicleId] = useState(null); 
+    const [selectedVehicle, setSelectedVehicle] = useState(null);
+
 
     const imgStyles = {
-      width: "20rem",
-      height: "15rem"
+      width: "100%",
+      height: "auto"
     };
 
     useEffect(() => {
@@ -50,12 +52,10 @@ export const VehiculosList = () => {
     const rows = vehicles.map((vehicles) => (
         <Table.Tr key={vehicles.id}>
           <Table.Td>{vehicles.id}</Table.Td>  
-          <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {vehicles?.Images?.map((image, index) => (
-          <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={vehicles.title} />
-          ))}
-          </Table.Td>
+          <Table.Td>
+       
+        <Button onClick={() => setSelectedVehicle(vehicles)}>Ver Imagenes</Button>
+         </Table.Td>
           <Table.Td>{vehicles.year}</Table.Td>
           <Table.Td>{vehicles.name}</Table.Td>
           <Table.Td>{vehicles.price}</Table.Td>
@@ -100,6 +100,27 @@ export const VehiculosList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedVehicle !== null} onClose={(close) => setSelectedVehicleId(null)}>
+          <Center>
+            {selectedVehicle?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    radius={"xl"}
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedVehicle.name}
+                    style={{
+                      objectFit: 'contain', // Ajusta la imagen al contenedor sin distorsionar
+                      maxWidth: '100%', // Asegura que la imagen no sobrepase el contenedor
+                      maxHeight: '100%' // Asegura que la imagen no sobrepase el contenedor
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedVehicle(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>
@@ -129,6 +150,7 @@ export const VehiculosList = () => {
                     </Stack>
                 </Grid.Col>
             </Grid>
+          
         </Box>
     );
 }

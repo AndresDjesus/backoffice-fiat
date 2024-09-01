@@ -13,6 +13,7 @@ export const CompanyList = () => {
 
     const [company, setCompany] = useState([]);
     const [selectedCompanyId, setSelectedCompanyId] = useState(null); 
+    const [selectedCompany, setSelectedCompany] = useState(null);
 
     const imgStyles = {
       width: "40rem",
@@ -49,10 +50,7 @@ export const CompanyList = () => {
         <Table.Tr key={company.id} >
           <Table.Td>{company.id}</Table.Td>  
           <Table.Td>  {/* Celda para mostrar las imágenes */}
-          {company?.Images?.map((image, index) => (
-        <Image key={index} styles={imgStyles} radius={"xl"} 
-               src={`data:image/png;base64,${image.base64}`} alt={company.name} />
-          ))}
+          <Button onClick={() => setSelectedCompany(company)}>Ver Imagen</Button>
           </Table.Td>
           <Table.Td>{company.name}</Table.Td>
           <Table.Td>{company.description}</Table.Td>
@@ -88,6 +86,27 @@ export const CompanyList = () => {
                 </Button>
               </Stack>
             </Modal>
+            <Modal opened={selectedCompany !== null} onClose={(close) => setSelectedCompanyId(null)}>
+          <Center>
+            {selectedCompany?.Images?.map((image, index) => (
+            <div key={index} 
+             style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
+                <Image
+                    radius={"xl"}
+                    src={`data:image/png;base64,${image.base64}`}
+                    alt={selectedCompany.name}
+                    style={{
+                      objectFit: 'contain', // Ajusta la imagen al contenedor sin distorsionar
+                      maxWidth: '100%', // Asegura que la imagen no sobrepase el contenedor
+                      maxHeight: '100%' // Asegura que la imagen no sobrepase el contenedor
+                    }}
+                />
+            </div>
+             
+             ))}
+           </Center>
+           <Center><Button onClick={() => setSelectedCompany(null)}>Volver</Button> </Center>
+          </Modal>
         <Center>
          <Table>
         <Table.Thead>

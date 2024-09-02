@@ -6,6 +6,8 @@ import { useForm , reset} from 'react-hook-form';
 import { getMotorById } from '../services/Motors';
 import { putMotor} from '../services/Motors';
 import { useParams } from 'react-router-dom';
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
 
 // Nuevo componente para el formulario
 export function MotorsPutForm() {
@@ -87,7 +89,12 @@ export function MotorsPutForm() {
       <br />
       <br />
       
-      <Center><Button type="submit">Modificar Motor</Button></Center>
+      <Center><Button type="submit" onClick={() => {
+                notifications.show({
+                  title: 'Motor modificado',
+                  message: 'Motor modificado con exito',
+                })
+                }}>Modificar Motor</Button></Center>
     </form>
     </Center>
     </Grid.Col>

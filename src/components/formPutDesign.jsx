@@ -6,11 +6,15 @@ import { getDesignById , putDesign} from '../services/Design';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export const FormPutDesign = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [design, setDesign] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -21,6 +25,9 @@ export const FormPutDesign = () => {
   const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
 
+  const handleClick = () => {
+    navigate('/listDesign'); 
+  };
 
   useEffect(() => {
     const fetchDesign = async () => {
@@ -82,8 +89,8 @@ export const FormPutDesign = () => {
   
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedDesignData = {
-        title: form.getValues('title'),
-        content : form.getValues('content'),
+        title: form.getValues('title') ? form.getValues('title') : design?.title,
+        content : form.getValues('content')? form.getValues('content') : design?.content,
         // ... otros campos que quieras actualizar
       };
   
@@ -112,9 +119,38 @@ export const FormPutDesign = () => {
           console.error('Error al modificar las imágenes o el design:', error);
         });
     } else {
-      // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
-    }
-  };
+      const updatedDesignData = {
+        title: form.getValues('title') ? form.getValues('title') : design?.title,
+        content : form.getValues('content')? form.getValues('content') : design?.content,
+        // ... otros campos que quieras actualizar
+      };
+
+      const putDesignPromise = putDesign(updatedDesignData , id)
+
+      putDesignPromise
+      .then((response) => {
+        console.log('Imágenes y design modificados exitosamente');
+        if(response?.stack) {
+          notifications.show({
+            title: 'Error',
+            message: response?.message,
+            color: 'red',
+          });
+        } else {
+          notifications.show({
+            title: 'Exito',
+            message: 'Design modificado exitosamente',
+            color: 'green',
+          });
+          handleClick();
+        }
+      })
+      .catch((error) => {
+        console.error('Error al modificar las imágenes o el design:', error);
+      });
+    // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
+  }
+};
     
   console.log('Selected image IDs:', selectedImages);
   console.log('Uploaded image base64:', uploadedImages);
@@ -201,7 +237,15 @@ export const FormPutDesign = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm()}>Modificar Design</Button>
+                 <Button 
+                onClick={() => {
+                handleConfirm();
+                handleClick();
+                notifications.show({
+                  title: 'Design modificado',
+                  message: 'Design modificado con exito',
+                })
+                }}>Modificar Design</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>

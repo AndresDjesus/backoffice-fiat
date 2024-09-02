@@ -6,11 +6,15 @@ import { getServiceById , putService} from '../services/Service';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export const FormPutService = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [service, setService] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -21,6 +25,10 @@ export const FormPutService = () => {
   const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
 
+  
+  const handleClick = () => {
+    navigate('/listService'); 
+  };
 
   useEffect(() => {
     const fetchService = async () => {
@@ -82,8 +90,8 @@ export const FormPutService = () => {
   
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedServiceData = {
-        name: form.getValues('name'),
-        description: form.getValues('description'),
+        name: form.getValues('name') ? form.getValues('name'): service?.name,
+        description: form.getValues('description') ? form.getValues('description'): service?.description,
       };
   
       // Array para almacenar las promesas de las peticiones PUT
@@ -111,6 +119,36 @@ export const FormPutService = () => {
           console.error('Error al modificar las imágenes o el servicio:', error);
         });
     } else {
+      const updatedServiceData = {
+        name: form.getValues('name') ? form.getValues('name') : service?.name,
+        description : form.getValues('description') ? form.getValues('description') : service?.description,
+        // ... otros campos que quieras actualizar
+      };
+
+      const putServicePromise = putService( updatedServiceData , id);
+
+
+      putServicePromise
+        .then((response) => {
+          console.log('Imágenes y servicio modificados exitosamente');
+          if(response?.stack) {
+            notifications.show({
+              title: 'Error',
+              message: response?.message,
+              color: 'red',
+            });
+          } else {
+            notifications.show({
+              title: 'Exito',
+              message: 'Interior modificado exitosamente',
+              color: 'green',
+            });
+            handleClick();
+          }
+        })
+        .catch((error) => {
+          console.error('Error al modificar las imágenes o el servicio:', error);
+        });
       // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
     }
   };
@@ -200,7 +238,15 @@ export const FormPutService = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm()}>Modificar Servicio</Button>
+                 <Button 
+                onClick={() => {
+                handleConfirm();
+                handleClick();
+                notifications.show({
+                  title: 'Servicio modificado',
+                  message: 'Servicio modificado con exito',
+                })
+                }}>Modificar Servicio</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>

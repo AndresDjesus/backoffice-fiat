@@ -7,11 +7,15 @@ import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
 import { date } from "yup";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export const FormPutBlog = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [blog, setBlog] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -22,6 +26,10 @@ export const FormPutBlog = () => {
   const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
 
+
+  const handleClick = () => {
+    navigate('/listBlog'); 
+  };
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -83,10 +91,10 @@ export const FormPutBlog = () => {
   
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedBlogData = {
-        title: form.getValues('title'),
-        description: form.getValues('description'),
-        content : form.getValues('content'),
-        date  : form.getValues('date'),
+        title: form.getValues('title') ? form.getValues('title'): blog?.title,
+        description: form.getValues('description') ? form.getValues('description'): blog?.description,
+        content : form.getValues('content') ? form.getValues('content'): blog?.content,
+        date  : form.getValues('date') ? form.getValues('date'): blog?.date,
         // ... otros campos que quieras actualizar
       };
   
@@ -114,7 +122,38 @@ export const FormPutBlog = () => {
         .catch((error) => {
           console.error('Error al modificar las imágenes o el post:', error);
         });
-    } else {
+    }  else {
+      const updatedBlogData = {
+        title: form.getValues('title') ? form.getValues('title'): blog?.title,
+        description: form.getValues('description') ? form.getValues('description'): blog?.description,
+        content : form.getValues('content') ? form.getValues('content'): blog?.content,
+        date  : form.getValues('date') ? form.getValues('date'): blog?.date,
+        // ... otros campos que quieras actualizar
+      };
+
+      const putBlogPromise = putBlog( updatedBlogData , id);
+      
+      putBlogPromise
+        .then((response) => {
+          console.log('Imágenes y blog modificados exitosamente');
+          if(response?.stack) {
+            notifications.show({
+              title: 'Error',
+              message: response?.message,
+              color: 'red',
+            });
+          } else {
+            notifications.show({
+              title: 'Exito',
+              message: 'Blog modificado exitosamente',
+              color: 'green',
+            });
+            handleClick();
+          }
+        })
+        .catch((error) => {
+          console.error('Error al modificar las imágenes o el servicio:', error);
+        });
       // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
     }
   };
@@ -129,7 +168,7 @@ export const FormPutBlog = () => {
         <Grid.Col p={'10rem'}>
           <Stack>
             <h2>
-              {'Modificar  Publicidad'}
+              {'Modificar  Post'}
             </h2>
             <Group>
               <FormProvider {...form}>
@@ -219,7 +258,16 @@ export const FormPutBlog = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm()}>Modificar Publicidad</Button>
+               
+               <Button 
+                onClick={() => {
+                handleConfirm();
+                handleClick();
+                notifications.show({
+                  title: 'Post modificado',
+                  message: 'Post modificado con exito',
+                })
+                }}>Modificar Post</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>

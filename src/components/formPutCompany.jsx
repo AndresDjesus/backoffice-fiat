@@ -6,11 +6,15 @@ import { getCompanyById , putCompany} from '../services/Company';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export const FormPutCompany = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [company, setCompany] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -21,6 +25,9 @@ export const FormPutCompany = () => {
   const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
 
+  const handleClick = () => {
+    navigate('/listCompany'); 
+  };
 
   useEffect(() => {
     const fetchCompany = async () => {
@@ -82,8 +89,8 @@ export const FormPutCompany = () => {
   
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedCompanyData = {
-        name: form.getValues('name'),
-        description: form.getValues('description'),
+        name: form.getValues('name') ? form.getValues('name'): company?.name,
+        description: form.getValues('description') ? form.getValues('description'): company?.description,
       };
   
       // Array para almacenar las promesas de las peticiones PUT
@@ -111,6 +118,35 @@ export const FormPutCompany = () => {
           console.error('Error al modificar las imágenes o la company:', error);
         });
     } else {
+      const updatedCompanyData = {
+        name: form.getValues('name') ? form.getValues('name') : company?.name,
+        description : form.getValues('description') ? form.getValues('description') : company?.description,
+        // ... otros campos que quieras actualizar
+      };
+
+      const putCompanyPromise = putCompany( updatedCompanyData , id);
+      
+      putCompanyPromise
+        .then((response) => {
+          console.log('Imágenes y empresa modificados exitosamente');
+          if(response?.stack) {
+            notifications.show({
+              title: 'Error',
+              message: response?.message,
+              color: 'red',
+            });
+          } else {
+            notifications.show({
+              title: 'Exito',
+              message: 'Empresa modificado exitosamente',
+              color: 'green',
+            });
+            handleClick();
+          }
+        })
+        .catch((error) => {
+          console.error('Error al modificar las imágenes o el servicio:', error);
+        });
       // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
     }
   };
@@ -200,7 +236,15 @@ export const FormPutCompany = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm()}>Modificar Servicio</Button>
+                  <Button 
+                onClick={() => {
+                handleConfirm();
+                handleClick();
+                notifications.show({
+                  title: 'Empresa modificada',
+                  message: 'Empresa modificada con exito',
+                })
+                }}>Modificar Empresa</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>

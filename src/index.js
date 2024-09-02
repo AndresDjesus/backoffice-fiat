@@ -56,6 +56,7 @@ import { PutLocation } from './components/PutLocation';
 import { BackofficeAdvertising } from './components/BackofficeAdvertising';
 import { ListAdvertising } from './components/ListaAdvertising';
 import { PutAdvertising } from './components/PutAdvertising';
+import { Notifications } from '@mantine/notifications';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -260,6 +261,7 @@ const router = createBrowserRouter([
 root.render(
   <React.StrictMode>
     <MantineProvider>
+      <Notifications />
       <RouterProvider router={router} />
     </MantineProvider>
   </React.StrictMode>

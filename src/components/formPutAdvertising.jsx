@@ -1,4 +1,4 @@
-import { Box, Grid, Input, Stack, Group, Button, Image, Checkbox, FileInput, Title } from "@mantine/core";
+import { Box, Grid, Input, Stack, Group, Button, Image, Checkbox, FileInput, Title , MantineProvider} from "@mantine/core";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
@@ -6,11 +6,15 @@ import { getAdvertisingById , putAdvertising} from '../services/Advertising';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export const FormPutAdvertising = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [advertising, setAdvertising] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -22,6 +26,9 @@ export const FormPutAdvertising = () => {
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
   const [successModalOpen, setSuccessModalOpen] = useState(false); 
 
+  const handleClick = () => {
+    navigate('/listAdvertising'); 
+  };
 
   useEffect(() => {
     const fetchAdvertising = async () => {
@@ -73,7 +80,6 @@ export const FormPutAdvertising = () => {
   const handleCloseImageEditModal = () => {
     setOpenedImageEditModal(false);
   };
-
  
 
   const handleConfirm = () => {
@@ -83,7 +89,7 @@ export const FormPutAdvertising = () => {
   
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedAdvertisingData = {
-        name: form.getValues('name'),
+        name: form.getValues('name') ? form.getValues('name'): advertising?.name,
         // ... otros campos que quieras actualizar
       };
   
@@ -107,12 +113,39 @@ export const FormPutAdvertising = () => {
       Promise.all(putPromises)
         .then(() => {
           console.log('Imágenes y publicidad modificadas exitosamente');
-          setSuccessModalOpen(true);
+
         })
         .catch((error) => {
           console.error('Error al modificar las imágenes o la publicidad:', error);
         });
     } else {
+      const updatedAdvertisingData = {
+        name: form.getValues('name') ? form.getValues('name') : advertising?.name,
+      };
+
+      const putAdvertisingPromise = putAdvertising( updatedAdvertisingData , id);
+      
+      putAdvertisingPromise
+        .then((response) => {
+          console.log('Imágenes y publicidad modificados exitosamente');
+          if(response?.stack) {
+            notifications.show({
+              title: 'Error',
+              message: response?.message,
+              color: 'red',
+            });
+          } else {
+            notifications.show({
+              title: 'Exito',
+              message: 'Publicidad modificada exitosamente',
+              color: 'green',
+            });
+            handleClick();
+          }
+        })
+        .catch((error) => {
+          console.error('Error al modificar las imágenes o el servicio:', error);
+        });
       // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
     }
   };
@@ -193,7 +226,16 @@ export const FormPutAdvertising = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm()}>Modificar Publicidad</Button>
+
+                <Button 
+                onClick={() => {
+                handleConfirm();
+                handleClick();
+                notifications.show({
+                  title: 'Publicidad modificada',
+                  message: 'Publicidad modificada con exito',
+                })
+                }}>Modificar Publicidad</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>
@@ -258,14 +300,6 @@ export const FormPutAdvertising = () => {
             ))}
             </Group>
             </Modal.Body>
-            </Modal>
-            <Modal
-              opened={successModalOpen}
-              onClose={() => setSuccessModalOpen(false)}
-              title="¡Éxito!"
-              >
-             <p>Su publicidad se ha modificado con éxito.</p>
-            <Button onClick={() => setSuccessModalOpen(false)}>Aceptar</Button>
             </Modal>
             </Group>
           </Stack>

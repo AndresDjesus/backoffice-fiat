@@ -6,11 +6,15 @@ import { getIndexById , putIndex} from '../services/Index';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export const FormPutIndex = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [index, setIndex] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -21,6 +25,9 @@ export const FormPutIndex = () => {
   const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
 
+  const handleClick = () => {
+    navigate('/listIndex'); 
+  };
 
   useEffect(() => {
     const fetchIndex = async () => {
@@ -82,12 +89,12 @@ export const FormPutIndex = () => {
   
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedIndexData = {
-        title: form.getValues('title'),
-        content : form.getValues('content'),
-        buyVehicletitle : form.getValues('buyVehicletitle'),
-        buyVehiclecontent : form.getValues('buyVehiclecontent'),
-        WhiWe : form.getValues('WhiWe'),
-        LookingforVehicle : form.getValues('LookingforVehicle'),
+        title: form.getValues('title') ? form.getValues('title'):index?.title,
+        content : form.getValues('content') ? form.getValues('content'):index?.content,
+        buyVehicletitle : form.getValues('buyVehicletitle') ? form.getValues('buyVehicletitle'):index?.buyVehicletitle,
+        buyVehiclecontent : form.getValues('buyVehiclecontent') ? form.getValues('buyVehiclecontent'):index?.buyVehiclecontent,
+        WhiWe : form.getValues('WhiWe') ? form.getValues('WhiWe'):index?.WhiWe,
+        LookingforVehicle : form.getValues('LookingforVehicle') ? form.getValues('LookingforVehicle'):index?.LookingforVehicle,
         // ... otros campos que quieras actualizar
       };
   
@@ -115,10 +122,44 @@ export const FormPutIndex = () => {
         .catch((error) => {
           console.error('Error al modificar las imágenes o el index:', error);
         });
-    } else {
+    }  else {
+      const updatedIndexData = {
+        title: form.getValues('title') ? form.getValues('title'):index?.title,
+        content : form.getValues('content') ? form.getValues('content'):index?.content,
+        buyVehicletitle : form.getValues('buyVehicletitle') ? form.getValues('buyVehicletitle'):index?.buyVehicletitle,
+        buyVehiclecontent : form.getValues('buyVehiclecontent') ? form.getValues('buyVehiclecontent'):index?.buyVehiclecontent,
+        WhiWe : form.getValues('WhiWe') ? form.getValues('WhiWe'):index?.WhiWe,
+        LookingforVehicle : form.getValues('LookingforVehicle') ? form.getValues('LookingforVehicle'):index?.LookingforVehicle,
+        // ... otros campos que quieras actualizar
+      };
+
+      const putIndexPromise = putIndex( updatedIndexData , id);
+      
+      putIndexPromise
+        .then((response) => {
+          console.log('Imágenes y index modificados exitosamente');
+          if(response?.stack) {
+            notifications.show({
+              title: 'Error',
+              message: response?.message,
+              color: 'red',
+            });
+          } else {
+            notifications.show({
+              title: 'Exito',
+              message: 'Index modificado exitosamente',
+              color: 'green',
+            });
+            handleClick();
+          }
+        })
+        .catch((error) => {
+          console.error('Error al modificar las imágenes o el servicio:', error);
+        });
       // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
     }
   };
+    
     
   console.log('Selected image IDs:', selectedImages);
   console.log('Uploaded image base64:', uploadedImages);
@@ -241,7 +282,15 @@ export const FormPutIndex = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm()}>Modificar Pagina</Button>
+                 <Button 
+                onClick={() => {
+                handleConfirm();
+                handleClick();
+                notifications.show({
+                  title: 'Pagina modificada',
+                  message: 'Pagina modificada con exito',
+                })
+                }}>Modificar Pagina</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>

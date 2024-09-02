@@ -14,11 +14,15 @@ import { getTechnology } from '../services/Technology';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
+import { useNavigate } from "react-router-dom";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
 
 export const FormPutVehicles = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [vehicle, setVehicle] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -164,12 +168,12 @@ export const FormPutVehicles = () => {
 
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedVehicleData = {
-        name: form.getValues('name'),
-        year: form.getValues('year'),
-        price: form.getValues('price'),
-        description: form.getValues('description'),
+        name: form.getValues('name') ? form.getValues('name') : vehicle?.name,
+        year: form.getValues('year') ? form.getValues('year') : vehicle?.year,
+        price: form.getValues('price') ? form.getValues('price') : vehicle?.price,
+        description: form.getValues('description') ? form.getValues('description') : vehicle?.description,
         transmission: transmission,
-        screen: form.getValues('screen'),
+        screen: form.getValues('screen') ? form.getValues('screen') : vehicle?.screen,
         category_id: categoryId,
         combustible_id: combustibleId,
         motor_id: motorId,
@@ -207,7 +211,43 @@ export const FormPutVehicles = () => {
           console.error('Error al modificar las imágenes o el vehiculo:', error);
         });
     } else {
-      // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
+
+        // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
+        const updatedVehicleData = {
+          name: form.getValues('name') ? form.getValues('name') : vehicle?.name,
+          year: form.getValues('year') ? form.getValues('year') : vehicle?.year,
+          price: form.getValues('price') ? form.getValues('price') : vehicle?.price,
+          description: form.getValues('description') ? form.getValues('description') : vehicle?.description,
+          transmission: transmission,
+          screen: form.getValues('screen') ? form.getValues('screen') : vehicle?.screen,
+          category_id: categoryId,
+          combustible_id: combustibleId,
+          motor_id: motorId,
+          inside_id: insideId,
+          design_id: designId,
+          technology_id: technologyId,
+        }
+
+        const putVehiclePromise = putVehicles(updatedVehicleData, id);
+        putVehiclePromise.then((response) => {
+          if(response.stack) {
+            notifications.show({
+              title: 'Error',
+              message: `${response?.message}`,
+              color: 'red',
+            })
+          } else {
+            notifications.show({
+              title: 'Vehiculo modificado',
+              message: 'Vehiculo modificado exitosamente',
+              color: 'green',
+            });
+            navigate('/listVehicles');
+          }
+        })
+        .catch((error) => {
+          console.error('Error al modificar el vehiculo:', error);
+        });
     }
   };
 
@@ -434,7 +474,12 @@ export const FormPutVehicles = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm(form.setValue)}>Modificar Vehiculo</Button>
+               
+               
+               <Button 
+                onClick={() => {
+                handleConfirm();
+                }}>Modificar Vehiculo</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>

@@ -7,6 +7,8 @@ import { getCombustibleById } from '../services/Combustible';
 import { putCombustible} from '../services/Combustible';
 import { useParams } from 'react-router-dom';
 import { click } from "@testing-library/user-event/dist/click";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
 
 // Nuevo componente para el formulario
 export function CombustiblePutForm() {
@@ -95,7 +97,12 @@ export function CombustiblePutForm() {
       <br />
       <br />
       
-      <Center><Button type="submit">Modificar Combustible </Button></Center>
+      <Center><Button type="submit" onClick={() => {
+                notifications.show({
+                  title: 'Combustible modificado',
+                  message: 'Combustible modificada con exito',
+                })
+                }}>Modificar Combustible </Button></Center>
     </form>
     </Center>
     </Grid.Col>

@@ -6,12 +6,15 @@ import { useForm , reset} from 'react-hook-form';
 import { getCategoryById } from '../services/Category';
 import { putCategory} from '../services/Category';
 import { useParams } from 'react-router-dom';
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
 
 // Nuevo componente para el formulario
 export function CategoryPutForm() {
 
   const { id } = useParams();
   const { register, handleSubmit, setValue, reset } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
@@ -52,7 +55,7 @@ export function CategoryPutForm() {
    useEffect(() => {
      if (categoryData) {
       
-  //     // setValue("name", vehicleData?.name);
+  //     / setValue("name", vehicleData?.name);
   //     // setValue("year", vehicleData?.year);
   //     // setValue("price", vehicleData?.price);
   //     // setValue("description", vehicleData?.description);
@@ -87,7 +90,12 @@ export function CategoryPutForm() {
       <br />
       <br />
       
-      <Center><Button type="submit">Modificar Categoria</Button></Center>
+      <Center><Button type="submit"   onClick={() => {
+                notifications.show({
+                  title: 'Categoria modificada',
+                  message: 'Categoria modificada con exito',
+                })
+                }}>Modificar Categoria</Button></Center>
     </form>
     </Center>
     </Grid.Col>

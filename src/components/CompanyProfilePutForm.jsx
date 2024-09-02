@@ -8,6 +8,9 @@ import { getCompanyProfileById, putCompanyProfile } from '../services/CompanyPro
 import { getCompanys} from '../services/Company';
 import { useParams } from 'react-router-dom';
 import { click } from "@testing-library/user-event/dist/click";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+
 
 // Nuevo componente para el formulario
 export function CompanyProfilePutForm() {
@@ -134,7 +137,12 @@ export function CompanyProfilePutForm() {
       <br />
       <br />
       
-      <Center><Button type="submit">Modificar Perfil </Button></Center>
+      <Center><Button type="submit" onClick={() => {
+                notifications.show({
+                  title: 'Perfil modificado',
+                  message: 'Perfil modificada con exito',
+                })
+                }}>Modificar Perfil </Button></Center>
     </form>
     </Center>
     </Grid.Col>

@@ -8,6 +8,8 @@ import { putLocation} from '../services/Location';
 import { useParams } from 'react-router-dom';
 import { getCompanys } from '../services/Company';
 import { click } from "@testing-library/user-event/dist/click";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
 
 // Nuevo componente para el formulario
 export function LocationPutForm() {
@@ -112,7 +114,12 @@ export function LocationPutForm() {
     />
     <br />
     <br />
-      <Center><Button type="submit">Modificar Ubicacion </Button></Center>
+      <Center><Button type="submit" onClick={() => {
+                notifications.show({
+                  title: 'Ubicacion modificada',
+                  message: 'Ubicacion modificada con exito',
+                })
+                }}>Modificar Ubicacion </Button></Center>
     </form>
     </Center>
     </Grid.Col>

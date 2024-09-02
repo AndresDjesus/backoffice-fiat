@@ -6,6 +6,9 @@ import { useForm , reset} from 'react-hook-form';
 import { getTechnologyById } from '../services/Technology';
 import { putTechnology} from '../services/Technology';
 import { useParams } from 'react-router-dom';
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+
 
 // Nuevo componente para el formulario
 export function TechnologyPutForm() {
@@ -81,7 +84,12 @@ export function TechnologyPutForm() {
       <br />
       <br />
       
-      <Center><Button type="submit">Modificar Tecnologia </Button></Center>
+      <Center><Button type="submit" onClick={() => {
+                notifications.show({
+                  title: 'Tecnologia modificada',
+                  message: 'Tecnologia modificada con exito',
+                })
+                }}>Modificar Tecnologia </Button></Center>
     </form>
     </Center>
     </Grid.Col>

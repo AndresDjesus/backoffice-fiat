@@ -100,7 +100,7 @@ export const VehiculosList = () => {
                 </Button>
               </Stack>
             </Modal>
-            <Modal opened={selectedVehicle !== null} onClose={(close) => setSelectedVehicleId(null)}>
+            <Modal opened={selectedVehicle !== null} onClose={(close)}>
           <Center>
             {selectedVehicle?.Images?.map((image, index) => (
             <div key={index} 

@@ -6,11 +6,15 @@ import { getInsideById , putInside} from '../services/Inside';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
+import { useNavigate } from "react-router-dom";
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
 
 export const FormPutInside = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [inside, setInside] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -21,6 +25,10 @@ export const FormPutInside = () => {
   const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
 
+
+  const handleClick = () => {
+    navigate('/listInside'); 
+  };
 
   useEffect(() => {
     const fetchInside = async () => {
@@ -82,8 +90,8 @@ export const FormPutInside = () => {
   
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedInsideData = {
-        title: form.getValues('title'),
-        content : form.getValues('content'),
+        title: form.getValues('title') ? form.getValues('title') : inside?.title,
+        content : form.getValues('content') ? form.getValues('content') : inside?.content,
         // ... otros campos que quieras actualizar
       };
   
@@ -112,6 +120,36 @@ export const FormPutInside = () => {
           console.error('Error al modificar las imágenes o el interior:', error);
         });
     } else {
+      const updatedInsideData = {
+        title: form.getValues('title') ? form.getValues('title') : inside?.title,
+        content : form.getValues('content') ? form.getValues('content') : inside?.content,
+        // ... otros campos que quieras actualizar
+      };
+
+      const putInsidePromise = putInside( updatedInsideData , id);
+
+
+      putInsidePromise
+        .then((response) => {
+          console.log('Imágenes y interior modificados exitosamente');
+          if(response?.stack) {
+            notifications.show({
+              title: 'Error',
+              message: response?.message,
+              color: 'red',
+            });
+          } else {
+            notifications.show({
+              title: 'Exito',
+              message: 'Interior modificado exitosamente',
+              color: 'green',
+            });
+            handleClick();
+          }
+        })
+        .catch((error) => {
+          console.error('Error al modificar las imágenes o el interior:', error);
+        });
       // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
     }
   };
@@ -135,7 +173,7 @@ export const FormPutInside = () => {
                 >
                   <Input
                     {...form.register('title')}
-                    defaultValue={inside.title}
+                    defaultValue={inside?.title}
                     placeholder="Nombre del interior"
                   />
                 </Input.Wrapper>
@@ -144,7 +182,7 @@ export const FormPutInside = () => {
                 >
                   <Input
                     {...form.register('content')}
-                    defaultValue={inside.content}
+                    defaultValue={inside?.content}
                     placeholder="Contenido"
                   />
                 </Input.Wrapper>
@@ -201,7 +239,10 @@ export const FormPutInside = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm()}>Modificar Interior</Button>
+                <Button 
+                onClick={() => {
+                handleConfirm();
+                }}>Modificar Interior</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>

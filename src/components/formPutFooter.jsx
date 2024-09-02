@@ -6,11 +6,14 @@ import { getFooterById , putFooter} from '../services/Footer';
 import { Modal } from '@mantine/core';
 import { getImageById } from '../services/Images';
 import { putImage } from "../services/Images";
-
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 export const FormPutFooter = () => {
 
   const form = useForm();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [footer, setFooter] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // IDs of selected images
@@ -21,6 +24,9 @@ export const FormPutFooter = () => {
   const [openedImageEditModal, setOpenedImageEditModal] = useState(false);
   const [showAdditionalInput, setShowAdditionalInput] = useState(false);
 
+  const handleClick = () => {
+    navigate('/listFooter'); 
+  };
 
   useEffect(() => {
     const fetchFooter = async () => {
@@ -82,21 +88,21 @@ export const FormPutFooter = () => {
   
       // Datos actualizados de la publicidad (obtienes estos datos de tu formulario)
       const updatedFooterData = {
-        address: form.getValues('address'),
-        email: form.getValues('email'),
-        phone: form.getValues('phone'),
+        address: form.getValues('address') ? form.getValues('address'): footer?.address,
+        email: form.getValues('email') ? form.getValues('email'):footer?.email,
+        phone: form.getValues('phone') ? form.getValues('phone'):footer?.phone,
         social_networks: {
           gmail :{
-            username: form.getValues('social_networks?.gmail?.username'),
-            url : form.getValues('social_networks?.gmail?.url'),
+            username: form.getValues('social_networks?.gmail?.username') ? form.getValues('social_networks?.gmail?.username'):footer?.social_networks?.gmail?.username,
+            url : form.getValues('social_networks?.gmail?.url') ? form.getValues('social_networks?.gmail?.url'):footer?.social_networks?.gmail?.url,
           },
           instagram: {
-            username: form.getValues('social_networks?.instagram?.username'),
-            url : form.getValues('social_networks?.instagram?.url'),
+            username: form.getValues('social_networks?.instagram?.username') ? form.getValues('social_networks?.instagram?.username'):footer?.social_networks?.instagram?.username,
+            url : form.getValues('social_networks?.instagram?.url') ? form.getValues('social_networks?.instagram?.url'):footer?.social_networks?.instagram?.url,
           },
           whatsapp :{
-            number : form.getValues('social_networks?.whatsapp?.number'),
-            url : form.getValues('social_networks?.whatsapp?.url'),
+            number : form.getValues('social_networks?.whatsapp?.number') ? form.getValues('social_networks?.whatsapp?.number'):footer?.social_networks?.whatsapp?.number,
+            url : form.getValues('social_networks?.whatsapp?.url') ? form.getValues('social_networks?.whatsapp?.url'):footer?.social_networks?.whatsapp?.url,
           } ,
       }
     }
@@ -126,9 +132,53 @@ export const FormPutFooter = () => {
           console.error('Error al modificar las imágenes o el footer:', error);
         });
     } else {
+      const updatedFooterData = {
+        address: form.getValues('address') ? form.getValues('address'): footer?.address,
+        email: form.getValues('email') ? form.getValues('email'):footer?.email,
+        phone: form.getValues('phone') ? form.getValues('phone'):footer?.phone,
+        social_networks: {
+          gmail :{
+            username: form.getValues('social_networks?.gmail?.username') ? form.getValues('social_networks?.gmail?.username'):footer?.social_networks?.gmail?.username,
+            url : form.getValues('social_networks?.gmail?.url') ? form.getValues('social_networks?.gmail?.url'):footer?.social_networks?.gmail?.url,
+          },
+          instagram: {
+            username: form.getValues('social_networks?.instagram?.username') ? form.getValues('social_networks?.instagram?.username'):footer?.social_networks?.instagram?.username,
+            url : form.getValues('social_networks?.instagram?.url') ? form.getValues('social_networks?.instagram?.url'):footer?.social_networks?.instagram?.url,
+          },
+          whatsapp :{
+            number : form.getValues('social_networks?.whatsapp?.number') ? form.getValues('social_networks?.whatsapp?.number'):footer?.social_networks?.whatsapp?.number,
+            url : form.getValues('social_networks?.whatsapp?.url') ? form.getValues('social_networks?.whatsapp?.url'):footer?.social_networks?.whatsapp?.url,
+          } ,
+      }
+    }
+
+      const putFooterPromise = putFooter( updatedFooterData , id);
+      
+      putFooterPromise
+        .then((response) => {
+          console.log('Imágenes y footer modificados exitosamente');
+          if(response?.stack) {
+            notifications.show({
+              title: 'Error',
+              message: response?.message,
+              color: 'red',
+            });
+          } else {
+            notifications.show({
+              title: 'Exito',
+              message: 'Footer modificado exitosamente',
+              color: 'green',
+            });
+            handleClick();
+          }
+        })
+        .catch((error) => {
+          console.error('Error al modificar las imágenes o el servicio:', error);
+        });
       // Mostrar un mensaje al usuario indicando que debe seleccionar al menos una imagen
     }
   };
+    
     
   console.log('Selected image IDs:', selectedImages);
   console.log('Uploaded image base64:', uploadedImages);
@@ -279,7 +329,16 @@ export const FormPutFooter = () => {
                     {'Imagenes Seleccionadas para editar '}
                   </Button>
                 )}
-                <Button onClick={() => handleConfirm()}>Modificar Footer</Button>
+                
+                <Button 
+                onClick={() => {
+                handleConfirm();
+                handleClick();
+                notifications.show({
+                  title: 'Footer modificado',
+                  message: 'Footer modificado con exito',
+                })
+                }}>Modificar Pie de Pagina</Button>
 
               </FormProvider>
               <Modal opened={opened} onClose={handleCancelModal} size={'100%'}>

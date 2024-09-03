@@ -116,9 +116,18 @@ export const FormPutBlog = () => {
   
       // Ejecutar todas las promesas en paralelo
       Promise.all(putPromises)
-        .then(() => {
-          console.log('Imágenes y post modificados exitosamente');
-        })
+      .then((r) => {
+        const [ imageR1, imageR2 ] = r;
+        if(!imageR1?.stack && !imageR2?.stack) {
+          notifications.show({
+            title: 'Exito',
+            message: 'Blog modificado exitosamente',
+            color: 'green',
+          });
+          navigate('/listBlog');
+        }
+      }        
+      )
         .catch((error) => {
           console.error('Error al modificar las imágenes o el post:', error);
         });

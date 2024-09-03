@@ -112,12 +112,18 @@ export const FormPutService = () => {
   
       // Ejecutar todas las promesas en paralelo
       Promise.all(putPromises)
-        .then(() => {
-          console.log('Imágenes y servicio modificados exitosamente');
-        })
-        .catch((error) => {
-          console.error('Error al modificar las imágenes o el servicio:', error);
-        });
+      .then((r) => {
+        const [ imageR1, imageR2 ] = r;
+        if(!imageR1?.stack && !imageR2?.stack) {
+          notifications.show({
+            title: 'Exito',
+            message: 'Servicio modificado exitosamente',
+            color: 'green',
+          });
+          navigate('/listService');
+        }
+      }        
+      )
     } else {
       const updatedServiceData = {
         name: form.getValues('name') ? form.getValues('name') : service?.name,

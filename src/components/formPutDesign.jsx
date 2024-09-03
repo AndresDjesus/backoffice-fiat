@@ -112,9 +112,18 @@ export const FormPutDesign = () => {
   
       // Ejecutar todas las promesas en paralelo
       Promise.all(putPromises)
-        .then(() => {
-          console.log('Imágenes y design modificados exitosamente');
-        })
+      .then((r) => {
+        const [ imageR1, imageR2 ] = r;
+        if(!imageR1?.stack && !imageR2?.stack) {
+          notifications.show({
+            title: 'Exito',
+            message: 'Design modificado exitosamente',
+            color: 'green',
+          });
+          navigate('/listDesign');
+        }
+      }        
+      )
         .catch((error) => {
           console.error('Error al modificar las imágenes o el design:', error);
         });

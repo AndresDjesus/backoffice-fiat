@@ -196,6 +196,7 @@ export const FormPutVehicles = () => {
         // Crear la solicitud PUT para actualizar la imagen
         const putImagePromise = putImage({ base64, principal: true }, imageId);
         putPromises.push(putImagePromise);
+        
       });
       console.log(updatedVehicleData, 'DATOOOOS');
       // Crear la solicitud PUT para actualizar la publicidad
@@ -204,9 +205,18 @@ export const FormPutVehicles = () => {
 
       // Ejecutar todas las promesas en paralelo
       Promise.all(putPromises)
-        .then(() => {
-          console.log('Imágenes y vehiculo modificados exitosamente');
-        })
+        .then((r) => {
+          const [ imageR1, imageR2 ] = r;
+          if(!imageR1?.stack && !imageR2?.stack) {
+            notifications.show({
+              title: 'Vehiculo modificado',
+              message: 'Vehiculo modificado exitosamente',
+              color: 'green',
+            });
+            navigate('/listVehicles');
+          }
+        }        
+        )
         .catch((error) => {
           console.error('Error al modificar las imágenes o el vehiculo:', error);
         });
@@ -226,6 +236,7 @@ export const FormPutVehicles = () => {
           inside_id: insideId,
           design_id: designId,
           technology_id: technologyId,
+
         }
 
         const putVehiclePromise = putVehicles(updatedVehicleData, id);

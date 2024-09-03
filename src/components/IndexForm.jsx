@@ -119,7 +119,7 @@ export  function IndexForm() {
       <input type="checkbox" id="principal" name="principal" checked={principal} onChange={(e) => setPrincipal(e.target.checked)} />
       <label htmlFor="principal">Imagen principal</label>
       <br /><br />
-      Imagenes: (Puede seleccionar un maximo de DOS imagenes por Design)
+      Imagenes: (Puede seleccionar un maximo de TRES imagenes por pagina)
       <br /><br />
       <input type="file" accept="image/*" multiple onChange={handleImageChange} />
       {/* Previews for selected images */}

@@ -125,9 +125,18 @@ export const FormPutFooter = () => {
   
       // Ejecutar todas las promesas en paralelo
       Promise.all(putPromises)
-        .then(() => {
-          console.log('Imágenes y footer modificados exitosamente');
-        })
+      .then((r) => {
+        const [ imageR1, imageR2 ] = r;
+        if(!imageR1?.stack && !imageR2?.stack) {
+          notifications.show({
+            title: 'Exito',
+            message: 'Footer modificado exitosamente',
+            color: 'green',
+          });
+          navigate('/listFooter');
+        }
+      }        
+      )
         .catch((error) => {
           console.error('Error al modificar las imágenes o el footer:', error);
         });

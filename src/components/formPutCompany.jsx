@@ -111,9 +111,18 @@ export const FormPutCompany = () => {
   
       // Ejecutar todas las promesas en paralelo
       Promise.all(putPromises)
-        .then(() => {
-          console.log('Imágenes y company modificados exitosamente');
-        })
+      .then((r) => {
+        const [ imageR1, imageR2 ] = r;
+        if(!imageR1?.stack && !imageR2?.stack) {
+          notifications.show({
+            title: 'Exito',
+            message: 'Company modificado exitosamente',
+            color: 'green',
+          });
+          navigate('/listCompany');
+        }
+      }        
+      )
         .catch((error) => {
           console.error('Error al modificar las imágenes o la company:', error);
         });

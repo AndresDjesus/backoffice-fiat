@@ -1,8 +1,14 @@
 import { useForm } from "react-hook-form"
 import { postTechnology } from "../services/Technology"
 import { Input, Button ,Center } from "@mantine/core"
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export  function TechnologyForm() {
+
+  const navigate = useNavigate();
+
   const { register, handleSubmit } = useForm()
   const onSubmit = async (data) => {
     try {
@@ -12,8 +18,14 @@ export  function TechnologyForm() {
           content: data?.content
         };
         const response = await postTechnology(technologyData);
-        console.log('Technology creada:', response);
-        // Manejar la respuesta del servidor
+        notifications.show({
+          title: 'Exito',
+          message: 'Tecnologia Creada exitosamente',
+          color: 'green',
+        });
+        navigate('/listTechnology');
+            console.log(data?.base64, 'RESULTADO DATA BASE 64');
+            console.log('Technology creada:', response);
       } catch (error) {
         console.error('Error creando la technology:', error);
         // Manejar el error

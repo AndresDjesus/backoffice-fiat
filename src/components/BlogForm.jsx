@@ -3,7 +3,13 @@ import { useForm } from "react-hook-form"
 import { postBlog} from "../services/Blog"
 import { Input, Button ,Center, Select } from "@mantine/core"
 import { postImage } from '../services/Images';
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
   export function BlogForm() {
+
+    const navigate = useNavigate();
+
     const { register, handleSubmit, setValue } = useForm({
       defaultValues: {
         date: new Date().toISOString() // Establece una fecha predeterminada
@@ -85,8 +91,12 @@ import { postImage } from '../services/Images';
         };
         await postImage(imageData);
       }
-  
-         // Combina las respuestas o realiza otras acciones según sea necesario
+        notifications.show({
+          title: 'Exito',
+          message: 'Post Creado exitosamente',
+          color: 'green',
+        });
+          navigate('/listBlog');
           console.log(data?.base64, 'RESULTADO DATA BASE 64');
          console.log('Post creado con exito:', blogResponse);
          

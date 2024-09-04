@@ -3,8 +3,14 @@ import { useForm } from "react-hook-form"
 import { postCompanyProfile} from "../services/CompanyProfile"
 import { Input, Button ,Center, Select } from "@mantine/core"
 import { getCompanys} from "../services/Company"
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export  function CompanyProfileForm() {
+
+  const navigate = useNavigate();
+
   const { register, handleSubmit, setValue } = useForm()
   const onSubmit = async (data) => {
     try {
@@ -18,7 +24,14 @@ export  function CompanyProfileForm() {
           schedule: data?.schedule
         };
         const response = await postCompanyProfile(companyProfileData);
-        console.log('Perfil creado:', response);
+        notifications.show({
+          title: 'Exito',
+          message: 'Perfil Creado exitosamente',
+          color: 'green',
+        });
+          navigate('/listCompanyProfile');
+            console.log(data?.base64, 'RESULTADO DATA BASE 64');
+          console.log('Perfil creado:', response);
         // Manejar la respuesta del servidor
       } catch (error) {
         console.error('Error creando el Perfil:', error);

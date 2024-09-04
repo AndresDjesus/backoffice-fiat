@@ -3,8 +3,14 @@ import { useForm } from "react-hook-form"
 import { Input, Button , Center} from "@mantine/core"
 import { postIndex } from "../services/Index"
 import { postImage } from '../services/Images';
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export  function IndexForm() {
+
+  const navigate = useNavigate();
+  
   const { register, handleSubmit, setValue } = useForm()
   const [images, setImages] = useState([]); // Array for storing multiple images
   const [principal, setPrincipal] = useState(false);
@@ -76,8 +82,12 @@ export  function IndexForm() {
         };
         await postImage(imageData);
       }
-  
-         // Combina las respuestas o realiza otras acciones según sea necesario
+      notifications.show({
+        title: 'Exito',
+        message: 'Index Creado exitosamente',
+        color: 'green',
+      });
+      navigate('/listIndex');
           console.log(data?.base64, 'RESULTADO DATA BASE 64');
          console.log('Index creado:', indexResponse);
          

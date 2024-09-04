@@ -1,8 +1,15 @@
 import { useForm } from "react-hook-form"
 import { Input, Button } from "@mantine/core"
 import { postCombustible } from "../services/Combustible"
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
+
 
 export  function CombustibleForm() {
+
+  const navigate = useNavigate();
+
   const { register, handleSubmit } = useForm()
   const onSubmit = async (data) => {
     try {
@@ -14,8 +21,14 @@ export  function CombustibleForm() {
           description: data?.description
         };
         const response = await postCombustible(combustibleData);
+        notifications.show({
+          title: 'Exito',
+          message: 'Combustible Creado exitosamente',
+          color: 'green',
+        });
+          navigate('/listCombustible');
+            console.log(data?.base64, 'RESULTADO DATA BASE 64');
         console.log('Combustible creado:', response);
-        // Manejar la respuesta del servidor
       } catch (error) {
         console.error('Error creando el combustible:', error);
         // Manejar el error

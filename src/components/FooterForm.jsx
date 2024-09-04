@@ -3,8 +3,15 @@ import { useForm } from "react-hook-form"
 import { postFooter } from "../services/Footer"
 import { postImage } from '../services/Images';
 import { Input, Button ,Center } from "@mantine/core"
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
+
 
   export function FooterForm() {
+
+    const navigate = useNavigate();
+
     const { register, handleSubmit, setValue } = useForm()
     const [images, setImages] = useState([]); // Array for storing multiple images
     const [principal, setPrincipal] = useState(false);
@@ -89,8 +96,12 @@ import { Input, Button ,Center } from "@mantine/core"
         };
         await postImage(imageData);
       }
-  
-         // Combina las respuestas o realiza otras acciones según sea necesario
+      notifications.show({
+        title: 'Exito',
+        message: 'Footer Creado exitosamente',
+        color: 'green',
+      });
+        navigate('/listFooter');
           console.log(data?.base64, 'RESULTADO DATA BASE 64');
          console.log('Footer creado:', footerResponse);
          

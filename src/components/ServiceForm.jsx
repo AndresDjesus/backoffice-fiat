@@ -3,12 +3,18 @@ import { useForm } from "react-hook-form"
 import { postService } from "../services/Service"
 import { Input, Button ,Center } from "@mantine/core"
 import { postImage } from '../services/Images';
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export  function ServiceForm() {
   const { register, handleSubmit, setValue } = useForm()
   const [images, setImages] = useState([]); // Array for storing multiple images
   const [principal, setPrincipal] = useState(false);
   const [serviceId, setServiceId] = useState(null); 
+
+  const navigate = useNavigate();
+  
   const handleImageChange = (e) => {
     const files = e.target.files; // Get all selected files
 
@@ -68,8 +74,12 @@ export  function ServiceForm() {
         };
         await postImage(imageData);
       }
-  
-         // Combina las respuestas o realiza otras acciones según sea necesario
+      notifications.show({
+        title: 'Exito',
+        message: 'Servicio Creado exitosamente',
+        color: 'green',
+      });
+      navigate('/listService');
           console.log(data?.base64, 'RESULTADO DATA BASE 64');
          console.log('Servicio creado:', serviceResponse);
          

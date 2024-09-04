@@ -10,6 +10,8 @@ import { getInsides } from '../services/Inside';
 import {getDesigns} from '../services/Design';
 import {getTechnology} from '../services/Technology';
 import { postImage } from '../services/Images';
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
 
 export function VehicleForm() {
   const { register, handleSubmit, setValue } = useForm()
@@ -97,12 +99,16 @@ export function VehicleForm() {
   };
   await postImage(imageData);
   }
-
-   // Combina las respuestas o realiza otras acciones según sea necesario
-    console.log(data?.base64, 'RESULTADO DATA BASE 64');
-   console.log('Vehiculo creado:', vehicleResponse);
-   
-  } catch (error) {
+  notifications.show({
+    title: 'Exito',
+    message: 'Vehiculo Creado exitosamente',
+    color: 'green',
+  });
+  navigate('/listVehicles');
+  console.log(data?.base64, 'RESULTADO DATA BASE 64');
+  console.log('Vehiculo creado:', vehicleResponse);
+}
+   catch (error) {
    console.error('Error:', error);
   } 
 
@@ -277,7 +283,7 @@ export function VehicleForm() {
       )}
       <br />
       <br />
-      <Center><Button type="submit">Crear Vehiculo</Button></Center>
+      <Center><Button type="submit" >Crear Vehiculo</Button></Center>
       <br />
       <Center><Button variant="outline" onClick={handleClearForm}>Limpiar Formulario</Button> </Center>
     </form>

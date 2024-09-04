@@ -4,8 +4,14 @@ import { postAdvertising } from "../services/Advertising"
 import { postImage } from "../services/Images"
 import { Input, Button, Center, Select, Image } from "@mantine/core"
 import { saveAs } from 'file-saver'; // Importar la librería file-saver
+import '@mantine/notifications/styles.css';
+import { notifications } from '@mantine/notifications';
+import { useNavigate } from "react-router-dom";
 
 export function AdvertisingForm() {
+
+  const navigate = useNavigate();
+
   const { register, handleSubmit, setValue } = useForm()
   const [images, setImages] = useState([]); // Array for storing multiple images
   const [principal, setPrincipal] = useState(false);
@@ -69,8 +75,12 @@ export function AdvertisingForm() {
         };
         await postImage(imageData);
       }
-  
-         // Combina las respuestas o realiza otras acciones según sea necesario
+         notifications.show({
+          title: 'Exito',
+          message: 'Publicidad Creada exitosamente',
+          color: 'green',
+        });
+          navigate('/listAdvertising');
           console.log(data?.base64, 'RESULTADO DATA BASE 64');
          console.log('Publicidad creada:', advertisingResponse);
          

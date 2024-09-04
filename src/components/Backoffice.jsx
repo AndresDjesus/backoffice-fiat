@@ -146,7 +146,7 @@ export const Backoffice = () => {
         <NavLink label = "Lista de la Pagina" href="/listIndex" />
         <NavLink label = "Crear Pagina Principal" href="/index" />
     </NavLink>
-    <NavLink 
+    {/* <NavLink 
     href="#"
     label = "Ubicacion"
     leftSection = {<IconFingerprint size= "1rem" stroke={1.5} />}
@@ -155,7 +155,7 @@ export const Backoffice = () => {
     >
         <NavLink label = "Lista de Ubicaciones" href="/listLocation" />
         <NavLink label = "Crear Ubicacion" href="/location" />
-    </NavLink>    
+    </NavLink>     */}
     <NavLink 
     href="#"
     label = "Publicidad"

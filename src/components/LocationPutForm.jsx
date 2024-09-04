@@ -38,7 +38,7 @@ export function LocationPutForm() {
   
   const [locationData, setLocationData] = useState(null);
   const [companies, setCompanies] = useState([]);
-
+  console.log(locationData, 'locationData');
   useEffect(() => {
 
     const fetchLocation = async () => {
@@ -51,6 +51,7 @@ export function LocationPutForm() {
         // Mostrar mensaje de error al usuario
       }
     };
+
 
     const fetchCompanies = async () => {
         const data = await getCompanys();

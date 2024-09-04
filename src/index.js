@@ -50,9 +50,6 @@ import { PutFooter } from './components/PutFooter';
 import { BackofficeIndex } from './components/BackofficeIndex';
 import { ListIndex } from './components/ListaIndex';
 import {PutIndex} from './components/PutIndex';
-import { BackofficeLocation } from './components/BackofficeLocation';
-import { ListLocation } from './components/ListaLocation';
-import { PutLocation } from './components/PutLocation';
 import { BackofficeAdvertising } from './components/BackofficeAdvertising';
 import { ListAdvertising } from './components/ListaAdvertising';
 import { PutAdvertising } from './components/PutAdvertising';
@@ -229,18 +226,6 @@ const router = createBrowserRouter([
   {
     path: "/putIndex/:id",
     element: <PutIndex />
-  },
-  {
-    path: "/location",
-    element: <BackofficeLocation/>
-  },
-  {
-    path: "/listLocation",
-    element: <ListLocation/>
-  },
-  {
-    path: "/putLocation/:id",
-    element: <PutLocation/>
   },
   {
     path: "/advertising",
